@@ -3,7 +3,8 @@
 
 import os
 
-from fabric.api import env, local
+from fabric.colors import green
+from fabric.api import env, local, task, lcd, execute, puts
 
 
 env.project_dir = os.path.dirname(os.path.realpath(__file__))
@@ -46,3 +47,16 @@ def reserve():
 def preview():
     local('pelican -s {config_dir}/production.py'
           ' -o {output_dir} {content_dir}'.format(**env))
+
+
+@task
+def publish():
+    # build
+    execute(build)
+
+    # deploy
+    with lcd(env.output_dir):
+        # ghp import
+        local('ghp-import -p ' + env.output_dir)
+
+    puts(green('Content was published.'))
