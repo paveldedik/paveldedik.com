@@ -31,5 +31,8 @@ STATIC_PATHS = (
 THEME = 'theme'
 THEME_STATIC_PATHS = ('static',)
 
+# Disqus
+DISQUS_SITENAME = 'paveldedik'
+
 # Uncomment following line if you want document-relative URLs when developing
 # RELATIVE_URLS = True
