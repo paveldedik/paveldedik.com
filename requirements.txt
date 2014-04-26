@@ -1,0 +1,6 @@
+Jinja2==2.7.2
+Pygments==1.6
+pelican==3.3
+pytz==2014.2
+ghp-import==0.4.1
+shovel==0.3.0
