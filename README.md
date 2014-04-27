@@ -1,4 +1,4 @@
-paveldedik.github.io
-====================
+paveldedik.com
+==============
 
-Personal website and blog.
+Yet another pointless website.
