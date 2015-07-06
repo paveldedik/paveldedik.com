@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*- #
 
 
-from __future__ import unicode_literals
-
 import os
 import sys
 
@@ -14,7 +12,7 @@ from utils import filters
 # Author's and Website's name
 
 AUTHOR = u'Pavel Dedík'
-SITENAME = u'Pavel Dedík\'s Website'
+SITENAME = u'Pavel Dedík'
 SITEURL = ''
 
 
