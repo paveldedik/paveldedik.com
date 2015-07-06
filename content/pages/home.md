@@ -11,7 +11,7 @@ save_as: index.html
   <a href="https://twitter.com/paveldedik" title="twitter" class="twitter">
     <span class="fa-twitter"></span>
   </a>
-  <a href="https://cz.linkedin.com/in/paveldedik" title="linkedin" class="linkedin">
+  <a href="https://linkedin.com/in/paveldedik" title="linkedin" class="linkedin">
     <span class="fa-linkedin-square"></span>
   </a>
 </div>

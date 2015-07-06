@@ -48,6 +48,7 @@ DISQUS_SITENAME = 'paveldedik'
 # Static paths will be copied under the same name
 
 STATIC_PATHS = (
+    'favicon.ico',
     'robots.txt',
     'CNAME',
 )
