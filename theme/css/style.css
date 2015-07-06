@@ -3,10 +3,47 @@
  */
 
 /* Links */
-a,
+a {
+  color: #4DBCE9;
+}
+
 a:focus,
 a:hover {
-  color: #fff;
+  color: #26ADE4;
+}
+
+.imprint {
+  margin-top: 40px;
+}
+
+.imprint a {
+  font-size: 48px;
+  text-decoration: none;
+  padding-left: 10px;
+}
+
+.imprint a.twitter {
+  color: #55acee;
+}
+
+.imprint a.twitter:hover {
+  color: #7abbed;
+}
+
+.imprint a.linkedin {
+  color: #0077B5;
+}
+
+.imprint a.linkedin:hover {
+  color: #2890c6;
+}
+
+.imprint a.github {
+  color: #171516;
+}
+
+.imprint a.github:hover {
+  color: #363234;
 }
 
 /* Custom default button */
