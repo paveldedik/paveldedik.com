@@ -20,10 +20,10 @@ def copyright(year):
     return u'&copy; {}'.format(period)
 
 
-def to_date(datum, format='%B %d, %Y'):
+def to_date(datum, dformat='%B %d, %Y'):
     """Template filter that prints given date.
     """
-    return datum.strftime(format)
+    return datum.strftime(dformat)
 
 
 def slugify(text, delim=u'-', length=None):
