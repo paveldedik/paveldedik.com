@@ -15,8 +15,13 @@ env.content_dir = env.project_dir + '/content'
 env.output_dir = env.project_dir + '/output'
 env.config_dir = env.project_dir + '/config'
 
+SLUG_REGEX = re.compile(r'[\t !"#$%&\'()*\-/<=>?@\[\\\]^_`{|},.]+')
 
-_slug_regex = re.compile(r'[\t !"#$%&\'()*\-/<=>?@\[\\\]^_`{|},.]+')
+TEMPLATE = """
+Title: {0}
+Date: {1:%Y-%m-%d %H:%M:%S}
+
+""".lstrip()
 
 
 def slugify(text, delim=u'-', length=60):
@@ -32,7 +37,7 @@ def slugify(text, delim=u'-', length=60):
     """
     result = []
     text = text if length is None else text[:length]
-    for word in _slug_regex.split(text.lower()):
+    for word in SLUG_REGEX.split(text.lower()):
         word = normalize('NFKD', word).encode('ascii', 'ignore')
         if word:
             result.append(word)
@@ -92,11 +97,8 @@ def new(title):
     slug = slugify(unicode(title.encode('utf8')))
     pubdate = datetime.datetime.now() + datetime.timedelta(hours=2)
 
-    template = "Title: {}\nDate: {}\n\n"
     filename = '{}.md'.format(slug)
-
-    pubdatestr = pubdate.strftime('%Y-%m-%d %H:%M:%S')
-    contents = template.format(title, pubdatestr)
+    contents = TEMPLATE.format(title, pubdate)
 
     path = os.path.join(env.content_dir, filename)
     with open(path, 'w') as fd:
