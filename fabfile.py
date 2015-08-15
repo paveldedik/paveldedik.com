@@ -2,6 +2,9 @@
 
 
 import os
+import re
+import datetime
+from unicodedata import normalize
 
 from fabric.colors import green, yellow
 from fabric.api import env, local, task, lcd, execute, puts
@@ -11,6 +14,29 @@ env.project_dir = os.path.dirname(os.path.realpath(__file__))
 env.content_dir = env.project_dir + '/content'
 env.output_dir = env.project_dir + '/output'
 env.config_dir = env.project_dir + '/config'
+
+
+_slug_regex = re.compile(r'[\t !"#$%&\'()*\-/<=>?@\[\\\]^_`{|},.]+')
+
+
+def slugify(text, delim=u'-', length=60):
+    """Generates an ASCII-only slug. A slug is the part of a URL which
+    identifies a page using human-readable keywords.
+    See `Generating Slugs<http://flask.pocoo.org/snippets/5/>`_.
+    :type text: unicode
+    :param delim: Separator for white space characters. Default is hyphen.
+    :type delim: unicode
+    :param length: Maximum lenght of the result. Default is `60`.
+    :type length: integer
+    :rtype: unicode
+    """
+    result = []
+    text = text if length is None else text[:length]
+    for word in _slug_regex.split(text.lower()):
+        word = normalize('NFKD', word).encode('ascii', 'ignore')
+        if word:
+            result.append(word)
+    return unicode(delim.join(result))
 
 
 @task
@@ -42,7 +68,7 @@ def rebuild():
 def serve():
     """Starts up simple HTTP server."""
     puts(yellow('Press CTRL+C to terminate the server.', bold=True))
-    local('cd {output_dir} && python3 -m http.server'.format(**env))
+    local('cd {output_dir} && pelican server'.format(**env))
 
 
 @task
@@ -57,3 +83,21 @@ def publish():
         local('ghp-import -p ' + env.output_dir)
 
     puts(green('Content was published.', bold=True))
+
+
+@task
+def new(title):
+    """Creates new article template"""
+    slug = slugify(unicode(title.encode('utf8')))
+    pubdate = datetime.datetime.now() + datetime.timedelta(hours=2)
+
+    template = "Title: {}\nDate: {}\n\n"
+    filename = '{}.md'.format(slug)
+
+    pubdatestr = pubdate.strftime('%Y-%m-%d %H:%M:%S')
+    contents = template.format(title, pubdatestr)
+
+    path = os.path.join(env.content_dir, filename)
+    with open(path, 'w') as fd:
+        fd.write(contents.encode('utf8'))
+        puts('See {0}.'.format(filename))
