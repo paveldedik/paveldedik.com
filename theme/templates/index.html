@@ -1,9 +1,23 @@
 {% extends "base.html" %}
 
-{% block head %}
-  {{ super() }}
-  <title>{% block title %}Blog{% endblock %} | {{ SITENAME }}</title>
-{% endblock %}
+{% set item_active = 'blog' %}
+
+{% block title %}{{ SITENAME }}'s Writings{% endblock %}
 
 {% block content %}
+  {% for article in articles_page.object_list %}
+    <li class="list-unstyled">
+      <h1 class="page-header">
+        <a href="{{ SITEURL }}/{{ article.url }}" rel="bookmark" class="no-decor"
+           title="Permalink to {{ article.title|striptags }}">{{ article.title }}</a>
+        <small class="published" title="{{ article.date.isoformat() }}">
+          {{ article.date|date }}
+        </small>
+      </h1>
+      <div class="content-summary">
+        {{ article.summary }}
+        <p><a href="{{ SITEURL }}/{{ article.url }}">Read the whole thing</a></p>
+      </div>
+    </li>
+  {% endfor %}
 {% endblock %}

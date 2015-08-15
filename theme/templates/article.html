@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% set item_active = 'blog' %}
+
+{% block title %}{{ article.title }} | {{ SITENAME }}{% endblock %}
+
+{% block head %}
+  {{ super() }}
+  {% for keyword in article.keywords %}
+    <meta name="keywords" content="{{keyword}}" />
+  {% endfor %}
+
+  {% if article.description %}
+    <meta name="description" content="{{article.description}}" />
+  {% endif %}
+
+  {% for tag in article.tags %}
+    <meta name="tags" content="{{tag}}" />
+  {% endfor %}
+{% endblock %}
+
+{% block content %}
+  <h1 class="page-header">
+    {{ article.title }}
+    <small class="published" title="{{ article.date.isoformat() }}">
+      {{ article.date|date }}
+    </small>
+  </h1>
+  </header>
+  <div class="content">
+    {{ article.content }}
+  </div>
+
+  <h2 class="page-header">Comments</h2>
+  {% include 'disqus.html' %}
+{% endblock %}
