@@ -49,11 +49,12 @@ def clean():
 
 
 @task
-def build():
+def build(production=False):
     """Translates content into HTML."""
+    settings = 'production' if production else 'settings'
     local('touch content')
-    local('pelican -s {config_dir}/settings.py'
-          ' -o {output_dir} {content_dir}'.format(**env))
+    local('pelican -s {config_dir}/{settings}.py'
+          ' -o {output_dir} {content_dir}'.format(settings=settings, **env))
     puts(green('All content translated.', bold=True))
 
 
@@ -75,7 +76,7 @@ def serve():
 def publish():
     """Builds the content and publishes the output on GitHub Pages."""
     # build
-    execute(build)
+    execute(build, production=True)
 
     # deploy
     with lcd(env.output_dir):
