@@ -74,7 +74,7 @@ def rebuild():
 def serve():
     """Starts up simple HTTP server."""
     puts(yellow('Press CTRL+C to terminate the server.', bold=True))
-    local('cd {output_dir} && pelican server'.format(**env))
+    local('cd {output_dir} && python -m pelican.server'.format(**env))
 
 
 @task
