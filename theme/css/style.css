@@ -283,3 +283,12 @@ h1.page-header > small {
 .comments {
   margin-bottom: 30px;
 }
+
+
+/* Media */
+
+@media (max-width: 475px) {
+  h1 > .published {
+    display: none;
+  }
+}
