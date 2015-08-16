@@ -4,7 +4,7 @@ Tags: writing, science, mathematics, programming
 
 You may be wondering what this blog is all about. Though the content is not written yet, I have the feeling that it's going to be mostly about mathematics and programming. Perhaps, I will even write some articles on physics at some point. Not that I know anything about physics.
 
-## Code examples
+## Code Examples
 
 What exactly is the purpose of such examples? I guess I just wanted to demonstrate the power of the awesome [pygments](http://pygments.org/) syntax highlighter. The code bellow represents just some random algorithm I've written in the past. I'm not really sure what it does, though.
 
@@ -46,7 +46,9 @@ I know what you are thinking, it's not exactly the fastest implementation of the
             lesser = filter (< p) xs
             greater = filter (>= p) xs
 
-## Math examples
+Delightful!
+
+## Math Examples
 
 You have seen some pretty neat syntax-highlighted code examples, but is it possible to use mathematical equations so that it's both easy for me to write and readable for you at the same time? Let's try it out: $$P(m) = \frac{1}{1 + e^{-m}}$$
 
