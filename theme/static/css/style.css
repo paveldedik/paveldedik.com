@@ -14,7 +14,9 @@ body {
 
 body {
   color: #333;
+  font-family: "Merriweather", serif;
   font-size: 18px;
+  line-height: 1.75em;
   margin-bottom: 60px;
 }
 
@@ -46,9 +48,15 @@ body {
 }
 
 .about {
-  margin-top: 200px;
-  margin-bottom: 200px;
   text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+}
+
+.about p {
+  font-size: 22px;
 }
 
 .copyright {
@@ -77,6 +85,10 @@ a.no-decor {
   text-decoration: none;
 }
 
+a.no-decor:hover {
+  color: #555;
+}
+
 /* Custom default button */
 .btn-default,
 .btn-default:hover,
@@ -89,7 +101,7 @@ a.no-decor {
 
 pre,
 code {
-  font-family: 'Consolas', 'DejaVu Sans Mono', monospace;
+  font-family: "Consolas", "DejaVu Sans Mono", "Lucida Sans Typewriter", monospace;
   font-size: 15px;
   border-radius: 0;
 }
@@ -102,8 +114,9 @@ pre {
   overflow: auto;
   word-wrap: normal;
   white-space: pre;
-  margin-top: 10px;
-  margin-bottom: 20px;
+  margin-top: 25px;
+  margin-bottom: 30px;
+  padding: 18px;
 }
 
 blockquote {
@@ -111,6 +124,32 @@ blockquote {
   border-left: 5px solid #bbb;
   background: #f8f8f8;
   font-style: italic;
+}
+
+h1 {
+  font-size: 36px;
+}
+
+h2 {
+  font-size: 32px;
+  margin-top: 32px;
+  margin-bottom: 20px;
+}
+
+h3 {
+  font-size: 26px;
+  margin-top: 26px;
+  margin-bottom: 16px;
+}
+
+h4 {
+  font-size: 22px;
+  margin-top: 22px;
+  margin-bottom: 14px;
+}
+
+.math {
+  margin: 30px 0;
 }
 
 
@@ -161,13 +200,11 @@ blockquote {
   border-bottom-color: #4dbce9;
 }
 
-@media (min-width: 768px) {
-  .pretty-brand {
-    float: left;
-  }
-  .pretty-nav {
-    float: right;
-  }
+.pretty-brand {
+  float: left;
+}
+.pretty-nav {
+  float: right;
 }
 
 h1.page-header,
