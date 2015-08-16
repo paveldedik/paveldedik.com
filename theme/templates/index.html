@@ -11,12 +11,13 @@
         <a href="{{ SITEURL }}/{{ article.url }}" rel="bookmark" class="no-decor"
            title="Permalink to {{ article.title|striptags }}">{{ article.title }}</a>
         <small class="published" title="{{ article.date.isoformat() }}">
-          {{ article.date|date }}
+          <span class="fa fa-clock-o"></span> {{ article.date|date }}
         </small>
       </h1>
       <div class="content-summary">
         {{ article.summary }}
-        <p><a href="{{ SITEURL }}/{{ article.url }}">Read the whole thing</a></p>
+        <p><a class="btn btn-primary"
+              href="{{ SITEURL }}/{{ article.url }}">Read the whole thing</a></p>
       </div>
     </li>
   {% endfor %}
