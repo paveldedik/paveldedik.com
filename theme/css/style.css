@@ -81,7 +81,6 @@ p {
 
 a {
   color: #4dbce9;
-  font-style: italic;
 }
 
 a:focus,
@@ -240,10 +239,6 @@ h1.page-header > small {
   float: right;
   font-size: 50%;
   padding: 15px 0;
-}
-
-h1.page-header > a {
-  font-style: normal;
 }
 
 
