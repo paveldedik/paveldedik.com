@@ -55,6 +55,10 @@ body {
   margin-left: auto;
 }
 
+.about {
+  margin-bottom: 50px
+}
+
 .about h1 {
   text-align: center;
   margin-top: 45px;
