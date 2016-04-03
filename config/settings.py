@@ -13,7 +13,7 @@ from utils import filters
 
 AUTHOR = u'Pavel Dedík'
 SITENAME = u'Pavel Dedík'
-SITEURL = 'http://localhost:8000'
+SITEURL = 'http://localhost/paveldedik'
 
 
 # Default Language and Timezone
@@ -62,6 +62,7 @@ STATIC_PATHS = (
     'favicon.ico',
     'robots.txt',
     'CNAME',
+    'img',
 )
 
 

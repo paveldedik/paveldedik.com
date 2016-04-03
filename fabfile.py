@@ -20,6 +20,7 @@ SLUG_REGEX = re.compile(r'[\t !"#$%&\'()*\-/<=>?@\[\\\]^_`{|},.]+')
 TEMPLATE = """
 Title: {0}
 Date: {1:%Y-%m-%d %H:%M:%S}
+Status: draft
 
 """.lstrip()
 
@@ -74,6 +75,7 @@ def rebuild():
 def serve():
     """Starts up simple HTTP server."""
     puts(yellow('Press CTRL+C to terminate the server.', bold=True))
+    puts(green('Server running at http://localhost:8000', bold=True))
     local('cd {output_dir} && python -m pelican.server'.format(**env))
 
 

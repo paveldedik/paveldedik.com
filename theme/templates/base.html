@@ -30,6 +30,7 @@
         {% set navigation_bar = [
           ('home', 'Home', ''),
           ('blog', 'Blog', 'blog/'),
+          ('tips', 'Tips', 'tips/'),
         ] %}
         {% for name, text, endpoint in navigation_bar %}
           <li {% if name == item_active %}class="active"{% endif %}>

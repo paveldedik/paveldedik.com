@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% set item_active = 'tips' %}
+
+{% block title %}My Tips | {{ SITENAME }}{% endblock %}
+
+{% block head %}
+  {{ super() }}
+  <meta name="keywords" content="tips" />
+  <meta name="keywords" content="books" />
+  <meta name="keywords" content="blogs" />
+{% endblock %}
+
+{% block content %}
+  <div class="content">
+    {{ page.content }}
+  </div>
+{% endblock %}
