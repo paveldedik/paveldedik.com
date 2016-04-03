@@ -4,7 +4,7 @@ Save_as: tips/index.html
 
 ## Books
 
-Here is a list of books I would recommend anyone who wants to learn something about our world:
+Here is a list of books I would recommend to anyone who wants to learn something about our world:
 
 [![The Selfish Gene](https://d.gr-assets.com/books/1366758096m/61535.jpg)](https://www.goodreads.com/book/show/61535.The_Selfish_Gene?utm_medium=api&utm_source=blog_book)
 [![Surely You're Joking, Mr. Feynman!: Adventures of a Curious Character](https://d.gr-assets.com/books/1348445281m/5544.jpg)](https://www.goodreads.com/book/show/5544.Surely_You_re_Joking_Mr_Feynman_?utm_medium=api&utm_source=blog_book)
@@ -13,7 +13,7 @@ Here is a list of books I would recommend anyone who wants to learn something ab
 [![Learn You a Haskell for Great Good!](https://d.gr-assets.com/books/1294497489m/6593810.jpg)](https://www.goodreads.com/book/show/6593810-learn-you-a-haskell-for-great-good?utm_medium=api&utm_source=blog_book)
 [![The Limits to Growth: The 30-Year Update](https://d.gr-assets.com/books/1390169255m/705418.jpg)](https://www.goodreads.com/book/show/705418.The_Limits_to_Growth?utm_medium=api&utm_source=blog_book)
 
-... and here for anyone who wants to learn something about another worlds:
+And here a list for anyone who wants to learn something about another worlds:
 
 [![A Game of Thrones (A Song of Ice and Fire, #1)](https://d.gr-assets.com/books/1338863177m/11788809.jpg)](https://www.goodreads.com/book/show/11788809-a-game-of-thrones?utm_medium=api&utm_source=blog_book)
 [![Words of Radiance (The Stormlight Archive, #2)](https://d.gr-assets.com/books/1391535251m/17332218.jpg)](https://www.goodreads.com/book/show/17332218-words-of-radiance?utm_medium=api&utm_source=blog_book)
