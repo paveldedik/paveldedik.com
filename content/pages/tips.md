@@ -30,7 +30,8 @@ And here a list for anyone who wants to learn something about another worlds:
 * [What is NOT Random](https://youtu.be/sMb00lz-IfE)
 * [The True Science of Parallel Universes](https://youtu.be/Ywn2Lz5zmYg)
 * [The Future of Robotics and Artificial Intelligence](https://youtu.be/AY4ajbu_G3k)
-* [History of Mathematics in 50 minutes](https://youtu.be/YsEcpS-hyXw)
+* [History of Mathematics in 50 Minutes](https://youtu.be/YsEcpS-hyXw)
+* [Fermat's Last Theorem](http://www.dailymotion.com/video/x223gx8_bbc-horizon-1996-fermat-s-last-theorem_shortfilms)
 
 ## Links
 
