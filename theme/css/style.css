@@ -141,37 +141,42 @@ pre {
 
 blockquote {
   border: 1px solid #ccc;
-  border-left: 5px solid #bbb;
+  border-left: 5px solid #4dbce9;
   background: #f8f8f8;
   font-style: italic;
 }
 
 h1 {
   font-size: 36px;
+  margin-top: 55px;
+  margin-bottom: 38px;
 }
 
 h2 {
   font-size: 32px;
-  margin-top: 32px;
-  margin-bottom: 20px;
+  margin-top: 45px;
+  margin-bottom: 30px;
 }
 
 h3 {
   font-size: 26px;
-  margin-top: 26px;
-  margin-bottom: 16px;
+  margin-top: 36px;
+  margin-bottom: 22px;
 }
 
 h4 {
   font-size: 22px;
-  margin-top: 22px;
-  margin-bottom: 14px;
+  margin-top: 28px;
+  margin-bottom: 18px;
 }
 
 .math {
   margin: 30px 0;
 }
 
+ul, ol {
+  padding-left: 30px;
+}
 
 /* Header */
 
@@ -256,6 +261,32 @@ h1.page-header > small {
   float: right;
   font-size: 50%;
   padding: 15px 0;
+}
+
+.content h1,
+.content h2,
+.content h3,
+.content h4 {
+  position: relative;
+}
+
+a.headerlink {
+  float: left;
+  color: #ccc;
+  position: absolute;
+  top: 0;
+  left: -33px;
+}
+
+a.headerlink:hover,
+a.headerlink:focus {
+  color: #333;
+  text-decoration: none;
+}
+
+h5 > a.headerlink,
+h6 > a.headerlink {
+  display: none;
 }
 
 

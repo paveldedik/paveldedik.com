@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom"><title>Pavel Dedík</title><link href="http://paveldedik.com/" rel="alternate"></link><link href="http://paveldedik.com/feeds/all.atom.xml" rel="self"></link><id>http://paveldedik.com/</id><updated>2015-08-15T14:58:48+02:00</updated><entry><title>Hello, World!</title><link href="http://paveldedik.com/blog/hello-world" rel="alternate"></link><updated>2015-08-15T14:58:48+02:00</updated><author><name>Pavel Dedík</name></author><id>tag:paveldedik.com,2015-08-15:blog/hello-world</id><summary type="html">&lt;p&gt;You may be wondering what this blog is all about. Though the content is not written yet, I have the feeling that it's going to be mostly about mathematics and programming. Perhaps, I will even write some articles on physics at some point. Not that I know anything about physics.&lt;/p&gt;
-&lt;h2&gt;Code Examples&lt;/h2&gt;
+&lt;h2 id="code-examples"&gt;Code Examples&lt;a class="headerlink" href="#code-examples" title="Permanent link"&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;What exactly is the purpose of such examples? I guess I just wanted to demonstrate the power of the awesome &lt;a href="http://pygments.org/"&gt;pygments&lt;/a&gt; syntax highlighter. The code bellow represents just some random algorithm I've written in the past. I'm not really sure what it does, though.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;kmp&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;t&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;w&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
     &lt;span class="sd"&gt;&amp;quot;&amp;quot;&amp;quot;Implementation of the Knuth-Morris-Pratt algorithm.&lt;/span&gt;
@@ -42,7 +42,7 @@
 
 
 &lt;p&gt;Delightful!&lt;/p&gt;
-&lt;h2&gt;Math Examples&lt;/h2&gt;
+&lt;h2 id="math-examples"&gt;Math Examples&lt;a class="headerlink" href="#math-examples" title="Permanent link"&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;You have seen some pretty neat syntax-highlighted code examples, but is it possible to use mathematical equations so that it's both easy for me to write and readable for you at the same time? Let's try it out: &lt;/p&gt;
 &lt;div class="math"&gt;$$P(m) = \frac{1}{1 + e^{-m}}$$&lt;/div&gt;
 &lt;p&gt;Nice! You might not realize it, but I can write mathematical formulas like this: &lt;code&gt;$P(m) = \frac{1}{1 + e^{-m}}$&lt;/code&gt; (it is LaTeX syntax, in case you don't know). The beautiful typography is the hard work of the &lt;a href="https://www.mathjax.org/"&gt;MathJax&lt;/a&gt; plugin, which is a JavaScript display engine for mathematics that works in all browsers™.&lt;/p&gt;
