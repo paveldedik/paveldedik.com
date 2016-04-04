@@ -23,7 +23,12 @@ body {
   margin-bottom: 60px;
 }
 
+.body {
+  margin-bottom: 90px;
+}
+
 .footer {
+  background: #333;
   position: absolute;
   bottom: 0;
   width: 100%;
@@ -32,6 +37,8 @@ body {
 }
 
 .footer p {
+  position: relative;
+  top: 15px;
   margin: 0;
   font-family: Arial, sans-serif;
 }
@@ -56,7 +63,8 @@ body {
 }
 
 .about {
-  margin-bottom: 50px
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .about h1 {
@@ -167,13 +175,18 @@ h4 {
 
 /* Header */
 
+.header {
+  background: #333;
+  height: 95px;
+}
+
 .pretty-brand {
-  margin-top: 30px;
-  margin-bottom: 30px;
+  margin-top: 33px;
+  margin-bottom: 33px;
 }
 
 .pretty-brand a {
-  color: #333;
+  color: #fff;
   font-style: italic;
   font-weight: bold;
   text-decoration: none;
@@ -193,7 +206,7 @@ h4 {
 }
 
 .pretty-nav > li > a {
-  color: #333;
+  color: #fff;
   font-size: 16px;
   font-style: italic;
   font-weight: bold;
@@ -210,7 +223,7 @@ h4 {
 .pretty-nav > li.active > a,
 .pretty-nav > li.active > a:hover,
 .pretty-nav > li.active > a:focus {
-  color: #333;
+  color: #fff;
   border-bottom-color: #4dbce9;
 }
 
@@ -228,13 +241,13 @@ h2.page-header {
 }
 
 h1.page-header {
-  margin-top: 20px;
+  margin-top: 50px;
   margin-bottom: 40px;
   padding-bottom: 20px;
 }
 
 h2.page-header {
-  margin-top: 15px;
+  margin-top: 40px;
   margin-bottom: 30px;
   padding-bottom: 15px;
 }
