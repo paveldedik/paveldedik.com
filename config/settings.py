@@ -87,6 +87,7 @@ PLUGINS = [
 
 MD_EXTENSIONS = [
     'codehilite(css_class=highlight)',
+    'toc(permalink=#)',
 ]
 
 MATH_JAX = {
