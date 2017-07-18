@@ -13,10 +13,6 @@ Also studying computer science at the Faculty of Informatics, Masaryk University
 # Contact
 
 <div class="imprint">
-  <p>
-      email:
-      <a href="mailto:me@paveldedik.com" class="reverse">moc.kidedlevap@em</a>
-  </p>
   <a href="https://github.com/paveldedik" title="github" class="imprint-icon github">
     <span class="fa fa-github"></span>
   </a>

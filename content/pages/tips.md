@@ -37,6 +37,7 @@ And here a list for anyone who wants to learn something about other worlds:
 
 * [Coursera.org](https://www.coursera.org/) &ndash; If you want to get a deeper understanding of some interesting stuff.
 * [Czech Python](http://python.cz/en) &ndash; For anyone who happens to live in the Czech Republic and wants to learn programming in Python, yet doesn't know where to start.
+* [Mergado Developers Blog](https://blog.mergado.com/developers/) &ndash; Our company's blog about development.
 * [The Feynman Lectures on Physics](http://feynmanlectures.caltech.edu/) &ndash; A copy of Feynman's lectures on physics online for anyone with Internet access.
 * [Learn You a Haskell](http://learnyouahaskell.com/) &ndash; A book about one of the purest functional programming languages Haskell, available online.
 * [Skokaniotyci.cz](http://skokaniotyci.cz/) &ndash; A collection of some very good short stories written by a bunch of Czech authors. If you don't know Czech language, you should learn it.
