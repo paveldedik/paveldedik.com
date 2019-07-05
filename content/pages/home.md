@@ -4,7 +4,7 @@ Save_as: index.html
 
 # About
 
-I am currently located in Brno, Czech Republic, working as a Senior Platform Engineer at [Kiwi.com](https://kiwi.com/) &ndash; a flight ticket search engine.
+I am currently located in Brno, Czech Republic, working as a Senior Platform Engineer at [Kiwi.com](https://kiwi.com/) helping developers deliver better software, faster.
 
 Previously I worked as a CTO at [Mergado](https://www.mergado.cz) leading the development of a web service that helps shoppers promote their products on Heureka.cz, Zboží.cz, Google Merchant and other popular online shopping services.
 
