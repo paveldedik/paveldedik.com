@@ -61,6 +61,7 @@ DISQUS_SITENAME = 'paveldedik'
 STATIC_PATHS = (
     'favicon.ico',
     'robots.txt',
+    'keybase.txt',
     'CNAME',
     'img',
 )
