@@ -11,7 +11,7 @@ from settings import *  # noqa
 
 # Website's URL on production
 
-SITEURL = 'http://paveldedik.com'
+SITEURL = 'https://paveldedik.com'
 RELATIVE_URLS = False
 
 
