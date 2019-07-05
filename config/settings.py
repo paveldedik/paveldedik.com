@@ -13,7 +13,7 @@ from utils import filters
 
 AUTHOR = u'Pavel Dedík'
 SITENAME = u'Pavel Dedík'
-SITEURL = 'http://localhost/paveldedik'
+SITEURL = 'http://localhost:8000'
 
 
 # Default Language and Timezone
@@ -44,11 +44,11 @@ THEME_STATIC_PATHS = ('static',)
 
 # URLs
 
-ARTICLE_URL = 'blog/{slug}'
-ARTICLE_SAVE_AS = 'blog/{slug}.html'
-PAGE_URL = 'blog/{slug}'
-PAGE_SAVE_AS = 'blog/{slug}.html'
-INDEX_SAVE_AS = 'blog/index.html'
+ARTICLE_URL = 'articles/{slug}'
+ARTICLE_SAVE_AS = 'articles/{slug}.html'
+PAGE_URL = 'articles/{slug}'
+PAGE_SAVE_AS = 'articles/{slug}.html'
+INDEX_SAVE_AS = 'articles/index.html'
 
 
 # Disqus and Other Third-Paries
@@ -72,6 +72,7 @@ JINJA_FILTERS = {
     'date': filters.to_date,
     'slug': filters.slugify,
     'copyright': filters.copyright,
+    'domain': filters.url_to_domain,
 }
 
 

@@ -5,10 +5,10 @@
   <title>{% block title %}{{ SITENAME }}'s Homepage{% endblock %}</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
   <link rel="stylesheet" href="{{ SITEURL }}/theme/css/style.css">
   <link rel="stylesheet" href="{{ SITEURL }}/theme/css/pygment.css">
+  <script src="https://kit.fontawesome.com/0b2d59d992.js"></script>
   <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -29,6 +29,7 @@
       <ul class="nav pretty-nav">
         {% set navigation_bar = [
           ('home', 'Home', ''),
+          ('articles', 'Articles', 'articles/'),
           ('tips', 'Tips', 'tips/'),
         ] %}
         {% for name, text, endpoint in navigation_bar %}
@@ -56,6 +57,6 @@
   </footer>
 
   <script src="http://code.jquery.com/jquery.min.js"></script>
-  <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </body>
 </html>

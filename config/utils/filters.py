@@ -4,6 +4,7 @@
 import re
 from datetime import date
 from unicodedata import normalize
+from urlparse import urlparse
 
 
 _slug_regex = re.compile(r'[\t !"#$%&\'()*\-/<=>?@\[\\\]^_`{|},.]+')
@@ -20,7 +21,7 @@ def copyright(year):
     return u'&copy; {}'.format(period)
 
 
-def to_date(datum, dformat='%B %d, %Y'):
+def to_date(datum, dformat='%d. %m. %Y'):
     """Template filter that prints given date.
     """
     return datum.strftime(dformat)
@@ -38,3 +39,9 @@ def slugify(text, delim=u'-', length=None):
         if word:
             result.append(word)
     return unicode(delim.join(result))
+
+
+def url_to_domain(uri):
+    """Extracts domain from given URI.
+    """
+    return urlparse(uri).netloc

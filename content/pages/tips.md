@@ -6,21 +6,28 @@ Save_as: tips/index.html
 
 Here is a list of books I would recommend to anyone who wants to learn something about our world:
 
-[![The Selfish Gene](https://d.gr-assets.com/books/1366758096m/61535.jpg)](https://www.goodreads.com/book/show/61535.The_Selfish_Gene?utm_medium=api&utm_source=blog_book)
-[![Surely You're Joking, Mr. Feynman!: Adventures of a Curious Character](https://d.gr-assets.com/books/1348445281m/5544.jpg)](https://www.goodreads.com/book/show/5544.Surely_You_re_Joking_Mr_Feynman_?utm_medium=api&utm_source=blog_book)
-[![Gödel, Escher, Bach: An Eternal Golden Braid](https://d.gr-assets.com/books/1428732588m/24113.jpg)](https://www.goodreads.com/book/show/24113.G_del_Escher_Bach?utm_medium=api&utm_source=blog_book)
-[![Modelování a simulace komplexních systémů: Jak lépe porozumět světu](https://d.gr-assets.com/books/1412844683m/15721003.jpg)](https://www.goodreads.com/book/show/15721003-modelov-n-a-simulace-komplexn-ch-syst-m?utm_medium=api&utm_source=blog_book)
-[![Learn You a Haskell for Great Good!](https://d.gr-assets.com/books/1294497489m/6593810.jpg)](https://www.goodreads.com/book/show/6593810-learn-you-a-haskell-for-great-good?utm_medium=api&utm_source=blog_book)
-[![The Limits to Growth: The 30-Year Update](https://d.gr-assets.com/books/1390169255m/705418.jpg)](https://www.goodreads.com/book/show/705418.The_Limits_to_Growth?utm_medium=api&utm_source=blog_book)
+[![The Selfish Gene](https://d.gr-assets.com/books/1366758096m/61535.jpg)](https://www.goodreads.com/book/show/61535.The_Selfish_Gene)
+[![Surely You're Joking, Mr. Feynman!](https://d.gr-assets.com/books/1348445281m/5544.jpg)](https://www.goodreads.com/book/show/5544.Surely_You_re_Joking_Mr_Feynman_)
+[![Gödel, Escher, Bach](https://d.gr-assets.com/books/1428732588m/24113.jpg)](https://www.goodreads.com/book/show/24113.G_del_Escher_Bach)
+[![Modelování a simulace komplexních systémů](https://d.gr-assets.com/books/1412844683m/15721003.jpg)](https://www.goodreads.com/book/show/15721003-modelov-n-a-simulace-komplexn-ch-syst-m)
+[![Learn You a Haskell for Great Good!](https://d.gr-assets.com/books/1294497489m/6593810.jpg)](https://www.goodreads.com/book/show/6593810-learn-you-a-haskell-for-great-good)
+[![The Limits to Growth](https://d.gr-assets.com/books/1390169255m/705418.jpg)](https://www.goodreads.com/book/show/705418.The_Limits_to_Growth)
+
+[![No Shortcuts to the Top](https://d.gr-assets.com/books/1320414477m/154924.jpg)](https://www.goodreads.com/book/show/154924.No_Shortcuts_to_the_Top)
+[![Peopleware](https://d.gr-assets.com/books/1386925395m/67825.jpg)](https://www.goodreads.com/book/show/67825.Peopleware)
+[![Band of Brothers](https://d.gr-assets.com/books/1328305257m/5497783.jpg)](https://www.goodreads.com/book/show/5497783-band-of-brothers)
+[![Turn the Ship Around!](https://d.gr-assets.com/books/1363560329m/16158601.jpg)](https://www.goodreads.com/book/show/16158601-turn-the-ship-around)
+[![Into Thin Air](https://d.gr-assets.com/books/1463384482m/1898.jpg)](https://www.goodreads.com/book/show/1898.Into_Thin_Air)
+[![Buried in the Sky](https://d.gr-assets.com/books/1330026054m/13149874.jpg)](https://www.goodreads.com/book/show/13149874-buried-in-the-sky)
 
 And here a list for anyone who wants to learn something about other worlds:
 
-[![A Game of Thrones (A Song of Ice and Fire, #1)](https://d.gr-assets.com/books/1338863177m/11788809.jpg)](https://www.goodreads.com/book/show/11788809-a-game-of-thrones?utm_medium=api&utm_source=blog_book)
-[![Words of Radiance (The Stormlight Archive, #2)](https://d.gr-assets.com/books/1391535251m/17332218.jpg)](https://www.goodreads.com/book/show/17332218-words-of-radiance?utm_medium=api&utm_source=blog_book)
-[![The Last Wish (The Witcher, #1)](https://d.gr-assets.com/books/1406412341m/8173788.jpg)](https://www.goodreads.com/book/show/8173788-the-last-wish?utm_medium=api&utm_source=blog_book)
-[![2001: A Space Odyssey (Space Odyssey, #1)](https://d.gr-assets.com/books/1363737620m/17662739.jpg)](https://www.goodreads.com/book/show/17662739-2001?utm_medium=api&utm_source=blog_book)
-[![Harry Potter and the Goblet of Fire (Harry Potter, #4)](https://d.gr-assets.com/books/1334490155m/13563644.jpg)](https://www.goodreads.com/book/show/13563644-harry-potter-and-the-goblet-of-fire?utm_medium=api&utm_source=blog_book)
-[![Ready Player One](https://d.gr-assets.com/books/1328000626m/12359421.jpg)](https://www.goodreads.com/book/show/12359421-ready-player-one?utm_medium=api&utm_source=blog_book)
+[![A Game of Thrones (A Song of Ice and Fire, #1)](https://d.gr-assets.com/books/1338863177m/11788809.jpg)](https://www.goodreads.com/book/show/11788809-a-game-of-thrones)
+[![Words of Radiance (The Stormlight Archive, #2)](https://d.gr-assets.com/books/1391535251m/17332218.jpg)](https://www.goodreads.com/book/show/17332218-words-of-radiance)
+[![The Last Wish (The Witcher, #1)](https://d.gr-assets.com/books/1406412341m/8173788.jpg)](https://www.goodreads.com/book/show/8173788-the-last-wish)
+[![2001: A Space Odyssey (Space Odyssey, #1)](https://d.gr-assets.com/books/1363737620m/17662739.jpg)](https://www.goodreads.com/book/show/17662739-2001)
+[![Harry Potter and the Goblet of Fire (Harry Potter, #4)](https://d.gr-assets.com/books/1334490155m/13563644.jpg)](https://www.goodreads.com/book/show/13563644-harry-potter-and-the-goblet-of-fire)
+[![Ready Player One](https://d.gr-assets.com/books/1328000626m/12359421.jpg)](https://www.goodreads.com/book/show/12359421-ready-player-one)
 
 ## Videos
 

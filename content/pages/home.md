@@ -4,22 +4,28 @@ Save_as: index.html
 
 # About
 
-Passionate developer interested in web development, machine learning, educational systems and in a tun of other stuff more or less related to computer science and mathematics.
+I am currently located in Brno, Czech Republic, working as a Senior Platform Engineer at [Kiwi.com](https://kiwi.com/), a flight ticket search engine.
 
-Currently located in Brno, Czech Republic, employed as a software engineer at [Mergado](http://www.mergado.cz) developing a web service that helps shoppers promote their products on Google Merchant, Heureka.cz and other popular online shopping services.
+Previously I worked as a CTO at [Mergado](https://www.mergado.cz) leading the development of a web service that helps shoppers promote their products on Heureka.cz, Zboží.cz, Google Merchant and other popular online shopping services.
 
-Also studying computer science at the Faculty of Informatics, Masaryk University Brno. Presently a graduate student and an attendee of the [Adaptive Learning](http://www.fi.muni.cz/adaptivelearning/) research group.
+Between 2010 to 2015 I studied computer science at the Faculty of Informatics, Masaryk University, Brno. I focused mainly on web development, machine learning, educational systems and other stuff more or less related to computer science and mathematics. For a time I was also a member of the [Studio of Graphic Design and Multimedia](https://www.fi.muni.cz/research/laboratories/agdm.html.en) and the [Adaptive Learning](https://www.fi.muni.cz/adaptivelearning/) research group.
 
 # Contact
 
 <div class="imprint">
   <a href="https://github.com/paveldedik" title="github" class="imprint-icon github">
-    <span class="fa fa-github"></span>
+    <span class="fab fa-github"></span>
   </a>
   <a href="https://twitter.com/paveldedik" title="twitter" class="imprint-icon twitter">
-    <span class="fa fa-twitter"></span>
+    <span class="fab fa-twitter"></span>
   </a>
   <a href="https://linkedin.com/in/paveldedik" title="linkedin" class="imprint-icon linkedin">
-    <span class="fa fa-linkedin-square"></span>
+    <span class="fab fa-linkedin"></span>
+  </a>
+  <a href="https://www.facebook.com/pdedik" title="facebook" class="imprint-icon facebook">
+    <span class="fab fa-facebook"></span>
+  </a>
+  <a href="https://keybase.io/paveldedik" title="keybase" class="imprint-icon keybase">
+    <span class="fab fa-keybase"></span>
   </a>
 </div>

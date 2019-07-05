@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% set item_active = 'blog' %}
+{% set item_active = 'articles' %}
 
 {% block title %}{{ SITENAME }}'s Writings{% endblock %}
 
@@ -8,7 +8,8 @@
   {% for article in articles_page.object_list %}
     <li class="list-unstyled">
       <h1 class="page-header">
-        <a href="{{ SITEURL }}/{{ article.url }}" rel="bookmark" class="no-decor"
+        <span class="language">{{ article.language }}</span>
+        <a href="{{ article.url }}" rel="bookmark" class="no-decor"
            title="Permalink to {{ article.title|striptags }}">{{ article.title }}</a>
         <small class="published" title="{{ article.date.isoformat() }}">
           <span class="fa fa-clock-o"></span> {{ article.date|date }}
@@ -16,8 +17,13 @@
       </h1>
       <div class="content-summary">
         {{ article.summary }}
-        <p><a class="btn btn-default btn-lg"
-              href="{{ SITEURL }}/{{ article.url }}">Read More</a></p>
+        <p><a class="btn btn-default btn-lg" href="{{ article.url }}">
+          {%- if article.language == "CZ" %}
+            číst celý článek na <span class="domain">{{ article.url|domain }}</span>
+          {% else %}
+            read more at <span class="domain">{{ article.url|domain }}</span>
+          {% endif -%}
+        </a></p>
       </div>
     </li>
   {% endfor %}
