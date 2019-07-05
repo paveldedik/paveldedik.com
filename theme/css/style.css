@@ -113,16 +113,16 @@ a.no-decor:hover {
 .btn-default,
 .btn-default:hover,
 .btn-default:focus {
-  color: #aaa;
+  color: #eee;
   text-shadow: none; /* Prevent inheritence from `body` */
   background-color: #333;
   border: 1px solid #333;
 }
 
-.btn-default .domain,
-.btn-default:hover .domain,
-.btn-default:focus .domain {
-  color: #eee;
+.btn-default:hover,
+.btn-default:focus {
+  background-color: #555;
+  border-color: #555;
 }
 
 pre,
