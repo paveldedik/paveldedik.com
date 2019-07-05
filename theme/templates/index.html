@@ -10,20 +10,20 @@
       <h1 class="page-header">
         <span class="language">{{ article.language }}</span>
         <a href="{{ article.url }}" rel="bookmark" class="no-decor"
-           title="Permalink to {{ article.title|striptags }}">{{ article.title }}</a>
+           title="Permalink to {{ article.title|striptags }}" target="_blank">{{ article.title }}</a>
         <small class="published" title="{{ article.date.isoformat() }}">
           <span class="fa fa-clock-o"></span> {{ article.date|date }}
         </small>
       </h1>
       <div class="content-summary">
         {{ article.summary }}
-        <p><a class="btn btn-default btn-lg" href="{{ article.url }}">
-          {%- if article.language == "CZ" %}
-            číst celý článek na <span class="domain">{{ article.url|domain }}</span>
-          {% else %}
-            read more at <span class="domain">{{ article.url|domain }}</span>
-          {% endif -%}
-        </a></p>
+        <p>
+          <a class="btn btn-default btn-lg" href="{{ article.url }}" target="_blank">
+            {%- if article.language == "CZ" %}číst celý článek{% else %}read more{% endif -%}
+          </a>
+          {% if article.language == "CZ" %}na{% else %}at{% endif %}
+          <b>{{ article.url|domain }}</b>
+        </p>
       </div>
     </li>
   {% endfor %}
