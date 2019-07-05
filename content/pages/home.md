@@ -26,4 +26,10 @@ Between 2010 to 2015 I studied computer science at the Faculty of Informatics, M
   <a href="https://keybase.io/paveldedik" title="keybase" class="imprint-icon keybase">
     <span class="fab fa-keybase"></span>
   </a>
+  <a href="https://www.strava.com/athletes/paveldedik" title="strava" class="imprint-icon strava">
+    <span class="fab fa-strava"></span>
+  </a>
+  <a href="https://www.thecrag.com/climber/paveldedik" title="thecrag" class="imprint-icon thecrag">
+    <span class="fas fa-mountain"></span>
+  </a>
 </div>

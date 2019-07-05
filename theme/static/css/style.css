@@ -362,10 +362,32 @@ h6 > a.headerlink {
 
 .imprint a.keybase {
   color: #ff6f21;
+  padding-left: 2px;
+  padding-right: 2px;
 }
 
 .imprint a.keybase:hover {
   color: #ff8747;
+}
+
+.imprint a.thecrag {
+  color: #222;
+  font-size: 44px;
+  padding-left: 4px;
+}
+
+.imprint a.thecrag:hover {
+  color: #444;
+}
+
+.imprint a.strava {
+  color: #fc4c02;
+  padding-left: 2px;
+  padding-right: 2px;
+}
+
+.imprint a.strava:hover {
+  color: #ff7940;
 }
 
 .imprint a.facebook {
