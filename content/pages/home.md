@@ -10,8 +10,6 @@ Previously I worked as a CTO at [Mergado](https://www.mergado.cz) leading the de
 
 Between 2010 to 2015 I studied computer science at the Faculty of Informatics, Masaryk University, Brno. I focused mainly on web development, machine learning, educational systems and other stuff more or less related to computer science and mathematics. For a time I was also a member of the [Studio of Graphic Design and Multimedia](https://www.fi.muni.cz/research/laboratories/agdm.html.en) and the [Adaptive Learning](https://www.fi.muni.cz/adaptivelearning/) research group.
 
-# Contact
-
 <div class="imprint">
   <a href="https://github.com/paveldedik" title="github" class="imprint-icon github">
     <span class="fab fa-github"></span>
