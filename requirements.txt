@@ -1,5 +1,5 @@
 Jinja2==2.10.1
-Pygments==2.4.2
+Pygments==2.7.4
 pelican==4.0.1
 pytz==2019.1
 ghp-import==0.5.5
