@@ -22,7 +22,7 @@ markupsafe==2.0.1
     # via jinja2
 pelican==4.0.1
     # via -r requirements.in
-pygments==2.4.2
+pygments==2.7.4
     # via
     #   -r requirements.in
     #   pelican
