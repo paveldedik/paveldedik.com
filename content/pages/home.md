@@ -4,11 +4,7 @@ Save_as: index.html
 
 # About
 
-I am currently located in Brno, Czech Republic, working as a Senior Platform Engineer at [Kiwi.com](https://kiwi.com/) helping developers deliver better software, faster.
-
-Previously I worked as a CTO at [Mergado](https://www.mergado.cz) leading the development of a web service that helps shoppers promote their products on Heureka.cz, Zboží.cz, Google Merchant and other popular online shopping services.
-
-Between 2010 to 2015 I studied computer science at the Faculty of Informatics, Masaryk University, Brno. I focused mainly on web development, machine learning, educational systems and other stuff more or less related to computer science and mathematics. For a time I was also a member of the [Studio of Graphic Design and Multimedia](https://www.fi.muni.cz/research/laboratories/agdm.html.en) and the [Adaptive Learning](https://www.fi.muni.cz/adaptivelearning/) research group.
+I am currently located in Brno, Czech Republic, working as a Software Engineer. I mainly focus on Python ecosystem, but I also like to work with Docker, Kubernetes and CI. My main ambition is to improve *developer experience* in products to make software engineers in companies happier.
 
 <div class="imprint">
   <a href="https://github.com/paveldedik" title="github" class="imprint-icon github">

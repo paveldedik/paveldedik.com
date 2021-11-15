@@ -4,7 +4,7 @@
 import re
 from datetime import date
 from unicodedata import normalize
-from urlparse import urlparse
+from urllib.parse import urlparse
 
 
 _slug_regex = re.compile(r'[\t !"#$%&\'()*\-/<=>?@\[\\\]^_`{|},.]+')
