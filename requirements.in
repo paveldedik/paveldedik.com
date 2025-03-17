@@ -1,7 +1,10 @@
-Jinja2
-Pygments
-pelican
-pytz
+colorama
 ghp-import
-Markdown
+fabric
+invoke
+jinja2
+pelican
+pygments
+pytz
+markdown
 typogrify

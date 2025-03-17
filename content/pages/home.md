@@ -8,24 +8,18 @@ I am currently located in Brno, Czech Republic, working as a Software Engineer. 
 
 <div class="imprint">
   <a href="https://github.com/paveldedik" title="github" class="imprint-icon github">
-    <span class="fab fa-github"></span>
+    <i class="fab fa-github"></i>
   </a>
-  <a href="https://twitter.com/paveldedik" title="twitter" class="imprint-icon twitter">
-    <span class="fab fa-twitter"></span>
+  <a href="https://bsky.app/profile/paveldedik.bsky.social" title="bluesky" class="imprint-icon bluesky">
+    <i class="fab fa-bluesky"></i>
   </a>
   <a href="https://linkedin.com/in/paveldedik" title="linkedin" class="imprint-icon linkedin">
-    <span class="fab fa-linkedin"></span>
-  </a>
-  <a href="https://www.facebook.com/pdedik" title="facebook" class="imprint-icon facebook">
-    <span class="fab fa-facebook"></span>
-  </a>
-  <a href="https://keybase.io/paveldedik" title="keybase" class="imprint-icon keybase">
-    <span class="fab fa-keybase"></span>
+    <i class="fab fa-linkedin"></i>
   </a>
   <a href="https://www.strava.com/athletes/paveldedik" title="strava" class="imprint-icon strava">
-    <span class="fab fa-strava"></span>
+    <i class="fab fa-strava"></i>
   </a>
   <a href="https://www.thecrag.com/climber/paveldedik" title="thecrag" class="imprint-icon thecrag">
-    <span class="fas fa-mountain"></span>
+    <i class="fas fa-mountain"></i>
   </a>
 </div>

@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-
-
 import re
 from datetime import date
 from unicodedata import normalize
@@ -18,7 +15,7 @@ def copyright(year):
         period = str(year)
     else:
         period = '{0}&ndash;{1}'.format(year, current_year)
-    return u'&copy; {}'.format(period)
+    return '&copy; {}'.format(period)
 
 
 def to_date(datum, dformat='%d. %m. %Y'):
@@ -27,7 +24,7 @@ def to_date(datum, dformat='%d. %m. %Y'):
     return datum.strftime(dformat)
 
 
-def slugify(text, delim=u'-', length=None):
+def slugify(text, delim='-', length=None):
     """Generates an ASCII-only slug. A slug is the part of a URL which
     identifies a page using human-readable keywords.
     See `Generating Slugs<http://flask.pocoo.org/snippets/5/>`_.
@@ -38,7 +35,7 @@ def slugify(text, delim=u'-', length=None):
         word = normalize('NFKD', word).encode('ascii', 'ignore')
         if word:
             result.append(word)
-    return unicode(delim.join(result))
+    return delim.join(result)
 
 
 def url_to_domain(uri):

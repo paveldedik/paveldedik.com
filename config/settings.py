@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*- #
-
-
 import os
 import sys
 
@@ -11,8 +8,8 @@ from utils import filters
 
 # Author's and Website's name
 
-AUTHOR = u'Pavel Dedík'
-SITENAME = u'Pavel Dedík'
+AUTHOR = 'Pavel Dedík'
+SITENAME = 'Pavel Dedík'
 SITEURL = 'http://localhost:8000'
 
 
