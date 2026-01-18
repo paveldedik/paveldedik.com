@@ -97,13 +97,17 @@ This will build the site and remind you to push to the master branch.
 
 **Important**: Make sure GitHub Pages is configured in your repository settings:
 1. Go to repository **Settings** → **Pages**
-2. Under **Source**, select **GitHub Actions**
-3. The site will deploy automatically on every push to master
+2. Under **Source**, select **Deploy from a branch**
+3. Under **Branch**, select **gh-pages** and **/ (root)**
+4. Click **Save**
+
+The GitHub Actions workflow will automatically build and push to the `gh-pages` branch on every push to `master`.
 
 ### Build Details
 
 - **Build Command**: `npm run build`
 - **Output Directory**: `dist/`
+- **Deploy Branch**: `gh-pages`
 - **Node Version**: 20.x
 - **Workflow File**: `.github/workflows/deploy.yml`
 
