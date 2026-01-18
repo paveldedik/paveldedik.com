@@ -1,0 +1,36 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = "Pavel Dedík - Software Engineer" } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
+    <link rel="stylesheet" href="/src/styles/global.css" />
+  </head>
+  <body>
+    <div class="container">
+      <nav>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/work">Work</a></li>
+          <li><a href="/opensource">OpenSource</a></li>
+          <li><a href="/contact">Contact</a></li>
+        </ul>
+      </nav>
+      <main>
+        <slot />
+      </main>
+    </div>
+  </body>
+</html>
