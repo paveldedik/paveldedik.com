@@ -149,7 +149,7 @@ nav a:hover {
 }
 
 /* Sections */
-section {
+section:last-child {
   margin-bottom: var(--spacing-lg);
 }
 
