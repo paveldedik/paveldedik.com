@@ -218,6 +218,10 @@ li {
   background-color: var(--color-pastel-peach);
 }
 
+.meta-tag.date.current {
+  background-color: var(--color-pastel-purple);
+}
+
 .description {
   margin-top: var(--spacing-xs);
 }
