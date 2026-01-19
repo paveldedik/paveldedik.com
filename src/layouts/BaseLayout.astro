@@ -7,6 +7,7 @@ interface Props {
 }
 
 const { title, description = "Pavel Dedík - Software Engineer" } = Astro.props;
+const currentPath = Astro.url.pathname;
 ---
 
 <!DOCTYPE html>
@@ -23,10 +24,10 @@ const { title, description = "Pavel Dedík - Software Engineer" } = Astro.props;
     <div class="container">
       <nav>
         <ul>
-          <li><a href="/">Home</a></li>
-          <li><a href="/work">Work</a></li>
-          <li><a href="/opensource">OpenSource</a></li>
-          <li><a href="/contact">Contact</a></li>
+          <li><a href="/" class={currentPath === '/' ? 'active' : ''}>Home</a></li>
+          <li><a href="/work" class={currentPath === '/work' ? 'active' : ''}>Work</a></li>
+          <li><a href="/opensource" class={currentPath === '/opensource' ? 'active' : ''}>OpenSource</a></li>
+          <li><a href="/contact" class={currentPath === '/contact' ? 'active' : ''}>Contact</a></li>
         </ul>
       </nav>
       <main>
