@@ -6,7 +6,7 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "deploy": "npm run build && echo 'Push to master branch to trigger deployment'",
+    "deploy": "astro build && npx wrangler@4 pages deploy dist --project-name=paveldedik --branch=master",
     "astro": "astro"
   },
   "dependencies": {

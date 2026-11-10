@@ -1,0 +1,7 @@
+# Copy to backend.hcl (gitignored), set your account ID, then in EACH module dir:
+#   terraform init -backend-config=../../backend.hcl
+# This is the only account-specific value the state backend needs; the R2 S3
+# credentials come from AWS_ACCESS_KEY_ID / AWS_SECRET_ACCESS_KEY (.env).
+endpoints = {
+  s3 = "https://YOUR_ACCOUNT_ID.r2.cloudflarestorage.com"
+}

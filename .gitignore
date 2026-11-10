@@ -1,24 +1,22 @@
-# build output
-dist/
-# generated types
-.astro/
+# Repo-root .gitignore — the zone's shared concerns. The site under root/ has
+# its own root/.gitignore for Node noise.
 
-# dependencies
-node_modules/
-
-# logs
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-
-
-# environment variables
+# Secrets & local config — never commit. Shared by every Terraform module.
 .env
 .env.production
+backend.hcl
+*.auto.tfvars
+terraform.tfvars
 
-# macOS-specific files
+# Terraform working dirs & any local state cache (real state lives in R2).
+# NOTE: **/.terraform.lock.hcl IS committed (pins exact provider versions).
+**/.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+
+# Editor & OS
 .DS_Store
-
-# jetbrains setting folder
 .idea/
+extensions.json
+launch.json

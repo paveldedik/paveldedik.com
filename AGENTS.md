@@ -9,21 +9,34 @@ This document provides coding agents with essential information about this codeb
 - **Language**: TypeScript with strict mode
 - **Package Manager**: npm
 - **Node Version**: 18.x+ (CI uses 20.x)
-- **Deployment**: GitHub Pages via GitHub Actions (on push to `master`)
+- **Deployment**: Cloudflare Pages (project `paveldedik`) via GitHub Actions on push to `master`
+- **Infra**: Terraform in `terraform/`, one module per hostname, state in the `paveldedik-tfstate` R2 bucket
 
 ## Project Structure
 
 ```
-src/
-├── layouts/        # Layout components (BaseLayout.astro)
-├── pages/          # Page routes (index, work, opensource, contact)
-└── styles/         # Global CSS (global.css)
-public/             # Static assets (fonts, favicon, CNAME)
-dist/               # Build output (gitignored)
-.astro/             # Astro-generated types and cache
+paveldedik.com/              ← repo root
+├── .env  backend.hcl        # gitignored, shared by every Terraform module
+├── .github/workflows/       # MUST stay here — Actions only reads .github at the toplevel
+├── root/                    # the apex site (paveldedik.com): the Astro project
+│   ├── src/layouts/         # Layout components (BaseLayout.astro)
+│   ├── src/pages/           # Page routes (index, work, opensource, contact)
+│   ├── src/styles/          # Global CSS (global.css)
+│   ├── public/              # Static assets (favicon, keybase.txt)
+│   └── dist/  .astro/       # Build output and Astro cache (gitignored)
+└── terraform/
+    └── root/                # paveldedik.com + www → state key root/terraform.tfstate
 ```
 
+**The site is in `root/`, not at the repo root.** `npm`, `astro` and `wrangler`
+all run from `root/`; paths below (`src/...`) are relative to it. A future
+subdomain is a sibling directory of `root/` plus a sibling module of
+`terraform/root/` and its own job in `.github/workflows/deploy.yml`. `README.md`
+is the runbook for Terraform and lists what in the zone is managed by hand.
+
 ## Build, Test & Development Commands
+
+Run all of these from `root/`.
 
 ### Development
 ```bash
@@ -34,7 +47,7 @@ npm run preview     # Preview production build locally
 ### Build & Deploy
 ```bash
 npm run build       # Build for production (outputs to dist/)
-npm run deploy      # Build + deployment reminder
+npm run deploy      # Build + manual `wrangler pages deploy` (needs `source ../.env`)
 ```
 
 ### Astro CLI
@@ -165,7 +178,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 - Minimal error handling needed (static site)
 - TypeScript strict mode catches type errors at build time
 - Build failures visible in GitHub Actions CI
-- 404s handled by GitHub Pages default behavior
+- 404s handled by Cloudflare Pages default behavior
 
 ## Development Workflow
 
@@ -176,10 +189,24 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 ## Deployment
 
-- **Automatic** - GitHub Actions deploys on push to `master`
-- **Target** - Publishes to `gh-pages` branch
-- **Domain** - Served at custom domain via `public/CNAME`
-- **Build command** - `npm run build` (outputs to `dist/`)
+- **Automatic** - `.github/workflows/deploy.yml` builds `root/` and runs
+  `wrangler pages deploy` on push to `master` (direct upload)
+- **Target** - Cloudflare Pages project `paveldedik`; `--branch=master` must
+  match the project's `production_branch` or the upload becomes a preview
+- **Domain** - Owned by `terraform/root` (apex CNAME, `www` 301, domain
+  binding). Terraform is not involved in a content change
+- **Secrets** - CI reads `CLOUDFLARE_API_TOKEN` / `CLOUDFLARE_ACCOUNT_ID` from
+  GitHub secrets; Terraform reads the gitignored `.env`. Never commit either
+
+## Terraform rules
+
+- `source .env`, then `terraform init -backend-config=../../backend.hcl` inside
+  the module directory.
+- Steady-state plans must be `No changes`. `terraform/root` declares only the
+  apex and `www` records — abort any plan that touches mail or another hostname.
+- Never change a module's backend `key` without migrating state.
+- Don't hardcode the `*.pages.dev` host; read `cloudflare_pages_project.*.subdomain`.
+- Populate a Pages project before binding a domain to it.
 
 ## Important Constraints
 

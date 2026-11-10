@@ -1,162 +1,124 @@
-# Pavel Dedík's Personal Website
+# paveldedik.com
 
-Modern, minimalist personal website built with Astro. Features monospace typography, clean design, and focuses on showcasing work experience and open source contributions.
+Everything behind the `paveldedik.com` Cloudflare zone in one repo: the sites
+and the Terraform that serves them. Same pattern as `~/Projects/pavlanna.cz`.
 
-## Tech Stack
+```
+paveldedik.com/
+├── .env  backend.hcl        # gitignored, shared by every module (*.example committed)
+├── .github/workflows/       # at the toplevel: Actions only looks here
+├── root/                    # the apex site — an Astro project, built to static HTML
+└── terraform/
+    └── root/                # paveldedik.com + www → state key root/terraform.tfstate
+```
 
-- **Framework**: Astro 5.x
-- **Language**: TypeScript (strict mode)
-- **Styling**: Custom CSS with CSS variables
-- **Fonts**: Berkeley Mono, IBM Plex Mono (with monospace fallbacks)
-- **Output**: Static HTML (no client-side JavaScript)
+| Hostname | Code | Terraform | Served by |
+|---|---|---|---|
+| `paveldedik.com` (+ `www` 301) | `root/` | `terraform/root` | Cloudflare Pages, project `paveldedik` |
 
-## Prerequisites
+**One Terraform module per hostname**, each with its own state file in the
+`paveldedik-tfstate` R2 bucket. A new subdomain gets a code directory next to
+`root/`, a module next to `terraform/root/` with its own state `key`, and a job
+in `.github/workflows/deploy.yml` — e.g. `blog/` plus `terraform/blog/`.
 
-- Node.js 18.x or higher
-- npm (comes with Node.js)
+> **Never change a module's backend `key`** without migrating state.
 
-## Local Development
+## Developing the site
 
-### Installation
+Everything Node runs **from `root/`**:
 
-```bash
+```sh
+cd root
 npm install
-```
-
-### Run Development Server
-
-```bash
-npm run dev
-```
-
-The site will be available at `http://localhost:4321`
-
-### Build for Production
-
-```bash
-npm run build
-```
-
-The static files will be generated in the `./dist/` directory.
-
-### Preview Production Build
-
-```bash
+npm run dev       # http://localhost:4321
+npm run build     # static output in root/dist/
 npm run preview
 ```
 
-## Project Structure
-
-```
-/
-├── public/              # Static assets (favicon, fonts, etc.)
-├── src/
-│   ├── layouts/         # Layout components
-│   │   └── BaseLayout.astro
-│   ├── pages/           # Routes (each file = one page)
-│   │   ├── index.astro      # Home page (/)
-│   │   ├── resume.astro     # Resume page (/resume)
-│   │   └── contact.astro    # Contact page (/contact)
-│   └── styles/          # Global CSS
-│       └── global.css
-├── package.json
-└── astro.config.mjs
-```
+Astro 5, TypeScript strict, plain CSS in `src/styles/global.css`, no client-side
+JavaScript. Pages live in `root/src/pages/` (`index`, `work`, `opensource`,
+`contact`); see `AGENTS.md` for the code style.
 
 ## Deployment
 
-This site is automatically deployed to **GitHub Pages** using GitHub Actions.
+A push to `master` runs `.github/workflows/deploy.yml`: it builds `root/` and
+pushes `root/dist` to the Pages project with `wrangler pages deploy` (direct
+upload). **Terraform is not involved in a content change.**
 
-### Automated Deployment (Recommended)
+The workflow needs two repository secrets (Settings → Secrets and variables →
+Actions):
 
-1. **Push to master branch**:
-   ```bash
-   git add .
-   git commit -m "Update site"
-   git push origin master
-   ```
+| Secret | Value |
+|---|---|
+| `CLOUDFLARE_API_TOKEN` | A token with **Account → Cloudflare Pages: Edit** only. Use a separate, narrower token than the Terraform one — CI never touches DNS. |
+| `CLOUDFLARE_ACCOUNT_ID` | The account ID. |
 
-2. **GitHub Actions will automatically**:
-   - Install dependencies
-   - Build the site with `npm run build`
-   - Deploy to GitHub Pages
+To deploy by hand instead:
 
-3. **Your site will be live at**: `https://paveldedik.github.io/paveldedik.com/`
-
-### Manual Deployment (Alternative)
-
-If you need to deploy manually:
-
-```bash
-npm run deploy
+```sh
+cd root && source ../.env && npm run deploy
 ```
 
-This will build the site and remind you to push to the master branch.
+Both paths pass `--branch=master`, which must match the project's
+`production_branch`; any other branch name produces a preview deployment.
 
-### GitHub Pages Configuration
+## Secrets for Terraform
 
-**Important**: Make sure GitHub Pages is configured in your repository settings:
-1. Go to repository **Settings** → **Pages**
-2. Under **Source**, select **Deploy from a branch**
-3. Under **Branch**, select **gh-pages** and **/ (root)**
-4. Click **Save**
+Two gitignored files at the repo root, shared by every module:
 
-The GitHub Actions workflow will automatically build and push to the `gh-pages` branch on every push to `master`.
-
-### Build Details
-
-- **Build Command**: `npm run build`
-- **Output Directory**: `dist/`
-- **Deploy Branch**: `gh-pages`
-- **Node Version**: 20.x
-- **Workflow File**: `.github/workflows/deploy.yml`
-
-## Customization
-
-### Updating Content
-
-- **Work Experience**: Edit `src/pages/resume.astro` (Work Experience section)
-- **Open Source Projects**: Edit `src/pages/resume.astro` (Open Source Contributions section)
-- **Contact Links**: Edit `src/pages/contact.astro`
-- **Home Page**: Edit `src/pages/index.astro`
-
-### Styling
-
-All styles are in `src/styles/global.css`. The design uses CSS variables for easy theming:
-
-```css
-:root {
-  --font-mono: "Berkeley Mono", "IBM Plex Mono", ...;
-  --color-bg: #ffffff;
-  --color-text: #000000;
-  --color-text-secondary: #666666;
-  --color-border: #e0e0e0;
-  --spacing-xs: 0.5rem;
-  --spacing-sm: 1rem;
-  --spacing-md: 2rem;
-  --spacing-lg: 4rem;
-  --max-width: 800px;
-}
+```sh
+cp .env.example .env                 # token, account ID, zone ID, R2 keypair
+cp backend.hcl.example backend.hcl   # your R2 S3 endpoint
 ```
 
-### Adding Fonts
+The account ID, the R2 keypair and `backend.hcl` are the same as in
+`~/Projects/pavlanna.cz` (same Cloudflare account). The API token there is
+scoped to the `pavlanna.cz` zone: add `paveldedik.com` to it or create a new
+one. `.env.example` lists the scopes.
 
-To use Berkeley Mono or IBM Plex Mono fonts:
+## Running Terraform
 
-1. Place font files in `public/fonts/`
-2. Add `@font-face` declarations in `src/styles/global.css`
-3. The current setup gracefully falls back to system monospace fonts
+```sh
+source .env
+cd terraform/root
+terraform init -backend-config=../../backend.hcl
+terraform plan
+```
 
-## Commands Reference
+**Steady-state plans must be `No changes`.** The module declares only the apex
+and `www` records; abort any plan that mentions mail or another hostname.
 
-| Command | Action |
-|---------|--------|
-| `npm install` | Install dependencies |
-| `npm run dev` | Start dev server at `localhost:4321` |
-| `npm run build` | Build production site to `./dist/` |
-| `npm run preview` | Preview production build locally |
-| `npm run deploy` | Build and show deployment reminder |
-| `npm run astro` | Run Astro CLI commands |
+## What is NOT managed here
+
+`terraform/root` declares only the apex and `www` records. These were set up by
+hand and no module may declare them:
+
+- **The zone itself** — added in the Cloudflare dashboard (Free plan); the
+  registrar is Active24, with nameservers pointed at Cloudflare. DNSSEC is off.
+- **Mail and verification** — `MX` → `aspmx.l.google.com` and the
+  `google-site-verification` `TXT` at the apex.
+- **The state bucket** `paveldedik-tfstate` and the API token / R2 keypair.
+
+### First provision of a Pages-backed hostname
+
+Binding a custom domain to an **empty** Pages project serves an empty site, and
+the project does not exist before the first apply — so a new hostname runs in
+three steps (shown for `root`):
+
+```sh
+cd terraform/root && terraform apply -target=cloudflare_pages_project.root
+cd ../../root && npm run deploy && curl -I https://paveldedik.pages.dev/
+cd ../terraform/root && terraform apply
+```
+
+Custom-domain activation takes a minute or two after `apply`.
+
+## What's committed vs. local
+
+- **Committed:** the site, `*.tf`, `**/.terraform.lock.hcl`, the `*.example`
+  templates, the docs.
+- **Gitignored:** `.env`, `backend.hcl`, `**/.terraform/`, any `*.tfstate*`,
+  `root/dist`, `root/node_modules`.
 
 ## License
 

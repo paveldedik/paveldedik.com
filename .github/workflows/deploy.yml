@@ -1,4 +1,4 @@
-name: Deploy to GitHub Pages
+name: Deploy to Cloudflare Pages
 
 on:
   push:
@@ -6,11 +6,20 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
+
+concurrency:
+  group: deploy-root
+  cancel-in-progress: false
 
 jobs:
-  build-and-deploy:
+  # One job per site directory. A new subdomain gets its own job (and its own
+  # Pages project) next to this one.
+  root:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: root
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -20,6 +29,7 @@ jobs:
         with:
           node-version: "20"
           cache: "npm"
+          cache-dependency-path: root/package-lock.json
 
       - name: Install dependencies
         run: npm ci
@@ -27,9 +37,11 @@ jobs:
       - name: Build with Astro
         run: npm run build
 
-      - name: Deploy to gh-pages branch
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
-          publish_branch: gh-pages
+      # Direct upload: Terraform (terraform/root) owns the Pages project and the
+      # domain, this only pushes the artifact. --branch must match the project's
+      # production_branch, otherwise the upload lands as a preview deployment.
+      - name: Deploy to Cloudflare Pages
+        run: npx wrangler@4 pages deploy dist --project-name=paveldedik --branch=master
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
