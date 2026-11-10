@@ -10,14 +10,14 @@ This document provides coding agents with essential information about this codeb
 - **Package Manager**: npm
 - **Node Version**: 18.x+ (CI uses 20.x)
 - **Deployment**: Cloudflare Pages (project `paveldedik`) via GitHub Actions on push to `master`
-- **Infra**: Terraform in `terraform/`, one module per hostname, state in the `paveldedik-tfstate` R2 bucket
+- **Infra**: Terraform in `terraform/`, one module per hostname, state in the `paveldedik-tfstate` R2 bucket; applied by GitHub Actions when `terraform/` changes
 
 ## Project Structure
 
 ```
 paveldedik.com/              ← repo root
 ├── .env  backend.hcl        # gitignored, shared by every Terraform module
-├── .github/workflows/       # MUST stay here — Actions only reads .github at the toplevel
+├── .github/workflows/       # deploy.yml (site) + terraform.yml (infra); must stay at the toplevel
 ├── root/                    # the apex site (paveldedik.com): the Astro project
 │   ├── src/layouts/         # Layout components (BaseLayout.astro)
 │   ├── src/pages/           # Page routes (index, work, opensource, contact)
@@ -31,7 +31,8 @@ paveldedik.com/              ← repo root
 **The site is in `root/`, not at the repo root.** `npm`, `astro` and `wrangler`
 all run from `root/`; paths below (`src/...`) are relative to it. A future
 subdomain is a sibling directory of `root/` plus a sibling module of
-`terraform/root/` and its own job in `.github/workflows/deploy.yml`. `README.md`
+`terraform/root/` and its own job in `.github/workflows/deploy.yml` (see
+"Adding a subdomain"). `README.md`
 is the runbook for Terraform and lists what in the zone is managed by hand.
 
 ## Build, Test & Development Commands
@@ -189,24 +190,60 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 ## Deployment
 
-- **Automatic** - `.github/workflows/deploy.yml` builds `root/` and runs
-  `wrangler pages deploy` on push to `master` (direct upload)
-- **Target** - Cloudflare Pages project `paveldedik`; `--branch=master` must
-  match the project's `production_branch` or the upload becomes a preview
-- **Domain** - Owned by `terraform/root` (apex CNAME, `www` 301, domain
-  binding). Terraform is not involved in a content change
-- **Secrets** - CI reads `CLOUDFLARE_API_TOKEN` / `CLOUDFLARE_ACCOUNT_ID` from
-  GitHub secrets; Terraform reads the gitignored `.env`. Never commit either
+Two workflows, both on `master`:
+
+- **`.github/workflows/deploy.yml`** — every push. Builds `root/` and runs
+  `wrangler pages deploy` (direct upload) to the Pages project `paveldedik`.
+  `--branch=master` must match the project's `production_branch` or the upload
+  becomes a preview.
+- **`.github/workflows/terraform.yml`** — only when `terraform/**` or the
+  workflow file changes. Runs `fmt -check`, `init`, `validate` and `plan` for
+  every directory under `terraform/`, one at a time; on `master` it applies the
+  saved plan, on a pull request it only plans.
+
+Consequences for an agent:
+
+- A content change (anything under `root/`) never runs Terraform. Push and the
+  site is live a minute later.
+- **A pushed change under `terraform/` is applied automatically, with no
+  confirmation.** Run `terraform plan` locally first and show the user the plan
+  before committing anything that destroys or replaces a resource.
+- CI fails on unformatted code — run `terraform fmt` before committing.
+- Never put `terraform apply` for an existing module in a script or a second
+  workflow; the R2 backend has no locking and the `terraform` concurrency group
+  is the only thing preventing overlapping runs.
+- Secrets: CI reads `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`,
+  `R2_ACCESS_KEY_ID` and `R2_SECRET_ACCESS_KEY` from GitHub secrets; local runs
+  read the gitignored `.env`. Never commit, print or echo either. The zone ID
+  in `terraform.yml` is not a secret.
 
 ## Terraform rules
 
-- `source .env`, then `terraform init -backend-config=../../backend.hcl` inside
-  the module directory.
+- Local runs: `source .env`, then
+  `terraform init -backend-config=../../backend.hcl` inside the module directory.
 - Steady-state plans must be `No changes`. `terraform/root` declares only the
   apex and `www` records — abort any plan that touches mail or another hostname.
+- **Not in Terraform, never declare them:** the zone itself, the `MX` record
+  (`aspmx.l.google.com`), the `google-site-verification` `TXT`, the state
+  bucket, the tokens. DNSSEC is off; the registrar is Active24.
 - Never change a module's backend `key` without migrating state.
 - Don't hardcode the `*.pages.dev` host; read `cloudflare_pages_project.*.subdomain`.
 - Populate a Pages project before binding a domain to it.
+- After a provider version change, re-run `terraform providers lock` for
+  `linux_amd64` as well, or CI's `init` fails on a checksum mismatch.
+
+## Adding a subdomain
+
+1. Code directory next to `root/` (e.g. `blog/`).
+2. Copy `terraform/root` to `terraform/blog`: new unique backend `key`, new
+   project name and hostname, no `www` record and no redirect ruleset.
+3. **First provision locally, before pushing** — otherwise the pipeline binds
+   the domain to an empty project:
+   `terraform apply -target=cloudflare_pages_project.<name>` → deploy the site
+   with wrangler → `terraform apply`.
+4. Add a job for it to `deploy.yml` (copy the `root` job). `terraform.yml`
+   needs no change — it lists `terraform/*/`.
+5. Update the tables in `README.md` and the structure above.
 
 ## Important Constraints
 
