@@ -120,11 +120,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 **CSS Variables:**
 ```css
---font-mono: "Berkeley Mono", "IBM Plex Mono", ...
+--font-mono: "JetBrains Mono", ui-monospace, ...
 --color-bg, --color-text, --color-text-secondary, --color-border
 --color-pastel-blue, --color-pastel-green, --color-pastel-purple, --color-pastel-peach
---spacing-xs (0.5rem), --spacing-sm (1rem), --spacing-md (2rem), --spacing-lg (4rem), --spacing-xl (6rem)
---max-width: 800px
+--color-deep-* and --color-tint-* (same four hues: strokes/markers/underlines, inline highlights)
+--accent (deep colour of the current page, set by .accent-* on <body>; list items override it)
+--spacing-xs (8px), --spacing-sm (16px), --spacing-md (28px), --spacing-lg (56px), --spacing-xl (96px)
+--max-width: 748px
 ```
 
 **Naming conventions:**

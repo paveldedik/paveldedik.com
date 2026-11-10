@@ -7,7 +7,15 @@ interface Props {
 }
 
 const { title, description = "Pavel Dedík - Software Engineer" } = Astro.props;
-const currentPath = Astro.url.pathname;
+const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
+
+const pages = [
+  { href: '/', label: 'Home', accent: 'blue' },
+  { href: '/work', label: 'Work', accent: 'green' },
+  { href: '/opensource', label: 'OpenSource', accent: 'purple' },
+  { href: '/contact', label: 'Contact', accent: 'peach' },
+];
+const accent = pages.find((page) => page.href === currentPath)?.accent ?? 'blue';
 ---
 
 <!DOCTYPE html>
@@ -20,22 +28,66 @@ const currentPath = Astro.url.pathname;
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,700;0,800;1,400&display=swap" rel="stylesheet" />
     <title>{title}</title>
   </head>
-  <body>
-    <div class="container">
-      <nav>
-        <ul>
-          <li><a href="/" class={currentPath === '/' ? 'active' : ''}>Home</a></li>
-          <li><a href="/work" class={currentPath === '/work' ? 'active' : ''}>Work</a></li>
-          <li><a href="/opensource" class={currentPath === '/opensource' ? 'active' : ''}>OpenSource</a></li>
-          <li><a href="/contact" class={currentPath === '/contact' ? 'active' : ''}>Contact</a></li>
-        </ul>
-      </nav>
-      <main>
-        <slot />
-      </main>
+  <body class={`accent-${accent}`}>
+    <div class="page">
+      <div class="backdrop" aria-hidden="true">
+        <div class="backdrop-dots"></div>
+        <svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMin slice" fill="none">
+          <g stroke="#1A1A1A" stroke-opacity=".10" stroke-width="1">
+            <path d="M-20 140H120V300H240V520H80V760H200V920" />
+            <path d="M300 -20V100H200V220" />
+            <path d="M-20 620H160V680" />
+            <path d="M1460 180H1320V360H1200V560H1360V920" />
+            <path d="M1160 -20V120H1280V240H1460" />
+            <path d="M1460 700H1240V800H1180V920" />
+          </g>
+          <g class="circuit-pulses" stroke-width="2" stroke-linecap="round" stroke-dasharray="30 970">
+            <path d="M-20 140H120V300H240V520H80V760H200V920" pathLength="1000" stroke="#5B8FCB" style="animation-duration: 18s" />
+            <path d="M300 -20V100H200V220" pathLength="1000" stroke="#E0A04E" style="animation-duration: 9s; animation-delay: -3s" />
+            <path d="M-20 620H160V680" pathLength="1000" stroke="#A678B6" style="animation-duration: 8s; animation-delay: -5s" />
+            <path d="M1460 180H1320V360H1200V560H1360V920" pathLength="1000" stroke="#6FAE78" style="animation-duration: 16s; animation-delay: -7s" />
+            <path d="M1160 -20V120H1280V240H1460" pathLength="1000" stroke="#A678B6" style="animation-duration: 11s; animation-delay: -2s" />
+            <path d="M1460 700H1240V800H1180V920" pathLength="1000" stroke="#E0A04E" style="animation-duration: 12s; animation-delay: -6s" />
+          </g>
+          <g class="circuit-pings">
+            <circle cx="240" cy="520" r="4" fill="#6FAE78" style="animation-duration: 6s" />
+            <circle cx="1320" cy="360" r="4" fill="#A678B6" style="animation-duration: 7s; animation-delay: -3s" />
+            <circle cx="200" cy="220" r="4" fill="#E0A04E" style="animation-duration: 5s; animation-delay: -1s" />
+          </g>
+          <g stroke-width="1.5">
+            <circle cx="120" cy="300" r="4" fill="#A7C4E5" stroke="#5B8FCB" />
+            <circle cx="240" cy="520" r="4" fill="#B7D6BB" stroke="#6FAE78" />
+            <circle cx="80" cy="760" r="4" fill="#D4B8DC" stroke="#A678B6" />
+            <circle cx="200" cy="220" r="4" fill="#F6D6AB" stroke="#E0A04E" />
+            <circle cx="160" cy="680" r="4" fill="#A7C4E5" stroke="#5B8FCB" />
+            <circle cx="1320" cy="360" r="4" fill="#D4B8DC" stroke="#A678B6" />
+            <circle cx="1200" cy="560" r="4" fill="#F6D6AB" stroke="#E0A04E" />
+            <circle cx="1280" cy="240" r="4" fill="#B7D6BB" stroke="#6FAE78" />
+            <circle cx="1240" cy="800" r="4" fill="#A7C4E5" stroke="#5B8FCB" />
+          </g>
+        </svg>
+      </div>
+      <div class="container">
+        <nav aria-label="Main">
+          <ul>
+            {pages.map((page) => (
+              <li>
+                <a
+                  href={page.href}
+                  class={page.href === currentPath ? 'active' : undefined}
+                  aria-current={page.href === currentPath ? 'page' : undefined}
+                >{page.label}</a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+        <main>
+          <slot />
+        </main>
+      </div>
     </div>
   </body>
 </html>
