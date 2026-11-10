@@ -13,6 +13,12 @@
   --muted: #676472;
   --line: #e9e3da;
   --line-soft: #f1ece5;
+  --velky-head: #dcefe3;
+  --maly-head: #dbe6f8;
+  --maly-ink: #3b4f7d;
+  --maly-free-bg: #e6eefb;
+  --maly-free-line: #c4d4f0;
+  --maly-free-ink: #3b4f7d;
   --accent: #6753b5;
   --accent-ink: #ffffff;
   --accent-soft: #ece6fa;
@@ -59,6 +65,12 @@
     --muted: #aaa7b8;
     --line: #393642;
     --line-soft: #302e39;
+    --velky-head: #27402f;
+    --maly-head: #2b3655;
+    --maly-ink: #b9c8f0;
+    --maly-free-bg: #222c45;
+    --maly-free-line: #35436a;
+    --maly-free-ink: #b9c8f0;
     --accent: #b6a6f2;
     --accent-ink: #1d1832;
     --accent-soft: #37305a;
@@ -248,7 +260,7 @@ h1 { font-size: 1.75rem; line-height: 1.15; letter-spacing: -.01em; font-weight:
   text-align: right; font-size: 10px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--free-ink);
 }
 
-.day { display: flex; flex-direction: column; min-width: 0; border-left: 1px solid var(--line); }
+.day { display: flex; flex-direction: column; min-width: 0; padding: 0 5px; border-left: 1px solid var(--line-soft); }
 .day__head {
   height: var(--head-h); flex: none; margin: 0; padding: 4px 6px;
   display: grid; grid-template-columns: auto auto; align-items: center; align-content: center; justify-content: center; gap: 2px 7px;
@@ -269,12 +281,17 @@ h1 { font-size: 1.75rem; line-height: 1.15; letter-spacing: -.01em; font-weight:
 
 .day__halls { display: flex; flex: 1; }
 .hall { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; }
-.hall + .hall { border-left: 1px dashed var(--line); }
+/* Each hall has its own hue for "volno" (green = Velký, blue = Malý); the track behind stays neutral. */
+.hall { --hall-head: var(--velky-head); }
+.hall[data-room="maly"] {
+  --free-bg: var(--maly-free-bg); --free-line: var(--maly-free-line); --free-ink: var(--maly-free-ink);
+  --hall-head: var(--maly-head);
+}
 .hall__head {
   height: var(--hall-h); flex: none; padding: 0 4px;
   display: flex; align-items: center; justify-content: center;
-  font-size: 10.5px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--muted);
-  background: var(--surface-2); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+  font-size: 10.5px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--free-ink);
+  border: 3px solid transparent; border-radius: 11px; background: var(--hall-head); background-clip: padding-box;
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 
@@ -368,7 +385,7 @@ h1 { font-size: 1.75rem; line-height: 1.15; letter-spacing: -.01em; font-weight:
   width: 14px; height: 14px; flex: none; border-radius: 5px;
   background: var(--hb); box-shadow: inset 4px 0 0 var(--hbar);
 }
-.swatch--free { background: var(--free-bg); box-shadow: inset 0 0 0 1px var(--free-line); }
+.swatch--free { background: linear-gradient(90deg, var(--free-bg) 50%, var(--maly-free-bg) 50%); box-shadow: inset 0 0 0 1px var(--free-line); }
 .swatch--maybe {
   background: repeating-linear-gradient(45deg, var(--free-bg) 0 3px, var(--maybe-gap) 3px 6px);
   box-shadow: inset 0 0 0 1px var(--free-line);
@@ -533,7 +550,8 @@ h1 { font-size: 1.75rem; line-height: 1.15; letter-spacing: -.01em; font-weight:
   .ev__time { font-size: 10.5px; white-space: normal; }
   .ev__title { font-size: 11.5px; }
   .ev__meta { font-size: 10.5px; }
-  .hall__head { font-size: 9.5px; letter-spacing: .02em; }
+  .day { padding: 0 2px; }
+  .hall__head { font-size: 9px; letter-spacing: 0; padding: 0 1px; border-width: 3px 2px; }
   .free__label { font-size: 10.5px; }
   /* A range ("19:45–20:00") is wider than a slim column: let it break after the dash. */
   .foot__list li {
