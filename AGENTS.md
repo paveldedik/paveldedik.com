@@ -4,7 +4,7 @@ This document provides coding agents with essential information about this codeb
 
 ## Project Overview
 
-- **Type**: Static personal portfolio website
+- **Type**: Static personal portfolio website (`root/`), plus one small sibling site, `eso-rozvrh/` (see "The eso-rozvrh site"); everything from here to "Deployment" describes `root/`
 - **Framework**: Astro 5.16.11 (Static Site Generator)
 - **Language**: TypeScript with strict mode
 - **Package Manager**: npm
@@ -17,15 +17,20 @@ This document provides coding agents with essential information about this codeb
 ```
 paveldedik.com/              ← repo root
 ├── .env  backend.hcl        # gitignored, shared by every Terraform module
-├── .github/workflows/       # deploy.yml (site) + terraform.yml (infra); must stay at the toplevel
+├── .github/workflows/       # deploy.yml (apex site), eso-rozvrh.yml, terraform.yml (infra); must stay at the toplevel
 ├── root/                    # the apex site (paveldedik.com): the Astro project
 │   ├── src/layouts/         # Layout components (BaseLayout.astro)
 │   ├── src/pages/           # Page routes (index, work, opensource, contact)
 │   ├── src/styles/          # Global CSS (global.css)
 │   ├── public/              # Static assets (favicon, keybase.txt)
 │   └── dist/  .astro/       # Build output and Astro cache (gitignored)
+├── eso-rozvrh/              # eso-rozvrh.paveldedik.com: plain static site + scraper, no build step
+│   ├── site/                # Deployed as is (index.html, style.css, app.js, lib.js, data/schedule.json)
+│   ├── site-test/           # node:test tests of site/lib.js, not deployed
+│   └── scraper/             # Node ESM scraper of tanecniskolaeso.cz + node:test tests
 └── terraform/
-    └── root/                # paveldedik.com + www → state key root/terraform.tfstate
+    ├── root/                # paveldedik.com + www → state key root/terraform.tfstate
+    └── eso-rozvrh/          # eso-rozvrh.paveldedik.com → state key eso-rozvrh/terraform.tfstate
 ```
 
 **The site is in `root/`, not at the repo root.** `npm`, `astro` and `wrangler`
@@ -190,7 +195,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 ## Deployment
 
-Two workflows, both on `master`:
+Three workflows, all on `master`:
 
 - **`.github/workflows/deploy.yml`** — every push. Builds `root/` and runs
   `wrangler pages deploy` (direct upload) to the Pages project `paveldedik`.
@@ -200,11 +205,20 @@ Two workflows, both on `master`:
   workflow file changes. Runs `fmt -check`, `init`, `validate` and `plan` for
   every directory under `terraform/`, one at a time; on `master` it applies the
   saved plan, on a pull request it only plans.
+- **`.github/workflows/eso-rozvrh.yml`** — Mondays 04:17 UTC and on a push
+  touching `eso-rozvrh/**`. Tests, scrapes, commits
+  `eso-rozvrh/site/data/schedule.json` if it changed (and every other week
+  regardless, to keep its check date fresh), deploys `eso-rozvrh/site`
+  to the Pages project `eso-rozvrh`. Its own workflow, not a job in
+  `deploy.yml`, because it also scrapes and commits.
 
 Consequences for an agent:
 
 - A content change (anything under `root/`) never runs Terraform. Push and the
   site is live a minute later.
+- A push under `eso-rozvrh/` deploys that site (and, harmlessly, `root/` again:
+  `deploy.yml` has no path filter). The bot's data commit triggers nothing —
+  pushes made with `GITHUB_TOKEN` start no workflow.
 - **A pushed change under `terraform/` is applied automatically, with no
   confirmation.** Run `terraform plan` locally first and show the user the plan
   before committing anything that destroys or replaces a resource.
@@ -222,7 +236,8 @@ Consequences for an agent:
 - Local runs: `source .env`, then
   `terraform init -backend-config=../../backend.hcl` inside the module directory.
 - Steady-state plans must be `No changes`. `terraform/root` declares only the
-  apex and `www` records — abort any plan that touches mail or another hostname.
+  apex and `www` records, `terraform/eso-rozvrh` only the `eso-rozvrh` record —
+  abort any plan that touches mail or another hostname.
 - **Not in Terraform, never declare them:** the zone itself, the `MX` record
   (`aspmx.l.google.com`), the `google-site-verification` `TXT`, the state
   bucket, the tokens. DNSSEC is off; the registrar is Active24.
@@ -242,10 +257,40 @@ Consequences for an agent:
    `terraform apply -target=cloudflare_pages_project.<name>` → deploy the site
    with wrangler → `terraform apply`.
 4. Add a job for it to `deploy.yml` (copy the `root` job). `terraform.yml`
-   needs no change — it lists `terraform/*/`.
+   needs no change — it lists `terraform/*/`. A site that needs more than
+   build-and-upload gets its own workflow, as `eso-rozvrh` did.
 5. Update the tables in `README.md` and the structure above.
 
+## The eso-rozvrh site
+
+`eso-rozvrh/` is the weekly timetable of the two halls of Taneční škola Eso
+(Brno), in Czech, showing when each hall is free. `eso-rozvrh/README.md` is its
+runbook. What differs from `root/`:
+
+- **No Astro, no build step, no dependencies to install for the site.**
+  `eso-rozvrh/site/` is deployed as is; test it by serving that directory.
+- **Client-side JavaScript is expected here** — `app.js` fetches
+  `data/schedule.json` and renders the week. The "no client-side JS" constraint
+  below is for `root/` only.
+- **`site/data/schedule.json` is written by the scraper** and committed by
+  `github-actions[bot]`. Don't edit it by hand, and never drop courses from it:
+  the school unlists a course once enrolment closes, while it is still running,
+  so the file only accumulates. Its shape is a contract between the scraper and
+  `app.js` — change both together.
+- **Tests exist here**: `cd eso-rozvrh/scraper && node --test` (against saved
+  HTML fixtures, never the live site) and `cd eso-rozvrh/site-test && node --test`
+  (the page's logic in `site/lib.js`; keep that file DOM-free, `app.js` does the
+  DOM). Run them from inside the directory. CI runs both before every scrape.
+- The bot commits the data file about every other week even when nothing
+  changed, so `git pull` before working here.
+- Scrape politely: a handful of requests per run, the bot User-Agent, no
+  personal details.
+- It runs unattended for years. Prefer failing loudly (non-zero exit → red run
+  → mail) over publishing guessed data, and keep it dependency-free.
+
 ## Important Constraints
+
+These describe `root/`.
 
 - **No dynamic content** - Pure static site, no API routes or server-side logic
 - **No client-side JS** - All interactivity is CSS-based (hover effects, transitions)

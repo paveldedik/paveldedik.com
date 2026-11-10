@@ -20,3 +20,6 @@ crash.log
 .idea/
 extensions.json
 launch.json
+
+# Wrangler cache from a manual `wrangler pages deploy`.
+.wrangler/

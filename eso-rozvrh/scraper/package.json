@@ -1,0 +1,14 @@
+{
+  "name": "eso-rozvrh-scraper",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Scrapes course listings of Tanecni skola Eso into ../site/data/schedule.json",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "scrape": "node scrape.mjs",
+    "test": "node --test"
+  }
+}

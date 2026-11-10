@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'">
+  <title>Rozvrh sálů – Taneční škola Eso</title>
+  <meta name="description" content="Neoficiální týdenní rozvrh Velkého a Malého sálu Taneční školy Eso v Brně: kdy běží kurzy a tančírna a kdy je v sálech volno.">
+  <meta name="theme-color" content="#fbf7f2" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#1c1a22" media="(prefers-color-scheme: dark)">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:title" content="Rozvrh sálů – Taneční škola Eso">
+  <meta property="og:description" content="Kdy je ve Velkém a Malém sále volno. Neoficiální přehled z veřejné nabídky kurzů.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='15' fill='%23e4d8f3'/%3E%3Crect x='12' y='14' width='17' height='22' rx='5' fill='%237c68c8'/%3E%3Crect x='35' y='14' width='17' height='12' rx='5' fill='%23f3b58a'/%3E%3Crect x='12' y='41' width='17' height='9' rx='4.5' fill='%2393cdb0'/%3E%3Crect x='35' y='31' width='17' height='19' rx='5' fill='%2393cdb0'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css">
+  <script type="module" src="app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#rozvrh">Přeskočit na rozvrh</a>
+
+  <header class="site-head">
+    <div class="wrap site-head__in">
+      <svg class="logo" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+        <rect class="logo__bg" width="64" height="64" rx="15"/>
+        <rect class="logo__a" x="12" y="14" width="17" height="22" rx="5"/>
+        <rect class="logo__b" x="35" y="14" width="17" height="12" rx="5"/>
+        <rect class="logo__c" x="12" y="41" width="17" height="9" rx="4.5"/>
+        <rect class="logo__c" x="35" y="31" width="17" height="19" rx="5"/>
+      </svg>
+      <div>
+        <h1>Rozvrh sálů <span class="site-head__sub">Taneční škola Eso</span></h1>
+        <p class="tagline">Kdy je ve Velkém a Malém sále volno. Neoficiální přehled z veřejné nabídky kurzů.</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <noscript>
+      <p class="banner banner--warn">Rozvrh se skládá v prohlížeči, bez JavaScriptu se bohužel nezobrazí. Kurzy najdete na
+        <a href="https://www.tanecniskolaeso.cz/tanecni-kurzy">tanecniskolaeso.cz</a>.</p>
+    </noscript>
+
+    <p id="stale" class="banner banner--warn" role="status" hidden></p>
+
+    <div id="status" class="state" role="status" aria-live="polite">
+      <span class="spinner" aria-hidden="true"></span>
+      <p>Načítám rozvrh…</p>
+    </div>
+
+    <div id="app" hidden>
+      <section class="toolbar" aria-label="Výběr týdne a zobrazení">
+        <div class="weeknav">
+          <button type="button" class="btn btn--icon" id="prev" aria-label="Předchozí týden" title="Předchozí týden (←)">
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M12.5 4.5 7 10l5.5 5.5"/></svg>
+          </button>
+          <button type="button" class="btn" id="today" title="Aktuální týden (D)">Dnes</button>
+          <button type="button" class="btn btn--icon" id="next" aria-label="Další týden" title="Další týden (→)">
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7.5 4.5 13 10l-5.5 5.5"/></svg>
+          </button>
+          <h2 class="weektitle" aria-live="polite">
+            <span id="week-range"></span>
+            <span id="week-no" class="weektitle__no"></span>
+          </h2>
+        </div>
+        <div class="filters">
+          <div class="seg" id="hall-filter" role="group" aria-label="Sály"></div>
+          <div class="seg" id="view-filter" role="group" aria-label="Rozsah dne">
+            <button type="button" data-view="compact" aria-pressed="true" title="Volné dopoledne se smrští do úzkého pruhu">Kompaktně</button>
+            <button type="button" data-view="full" aria-pressed="false" title="Celá časová osa v měřítku">Celý den</button>
+          </div>
+        </div>
+      </section>
+
+      <div id="jump" class="banner banner--info" hidden></div>
+
+      <nav id="daytabs" class="daytabs" aria-label="Dny v týdnu"></nav>
+
+      <section id="rozvrh" class="board" aria-label="Týdenní rozvrh sálů" tabindex="-1"></section>
+
+      <section id="unassigned" class="card-section" aria-labelledby="unassigned-title" hidden>
+        <h2 id="unassigned-title">Bez určeného sálu</h2>
+        <p class="hint">U těchto kurzů se nepodařilo rozpoznat sál, proto nejsou zakreslené v rozvrhu.</p>
+        <ul id="unassigned-list" class="chiplist"></ul>
+      </section>
+
+      <section class="legend" aria-label="Legenda">
+        <ul id="legend" class="legend__list"></ul>
+      </section>
+
+      <div class="columns">
+        <section id="notes" class="card-section" aria-labelledby="notes-title" hidden>
+          <h2 id="notes-title">Poznámky ze stránek školy</h2>
+          <ul id="notes-list" class="notes"></ul>
+        </section>
+
+        <section class="card-section" aria-labelledby="about-title">
+          <h2 id="about-title">Co tady (ne)najdete</h2>
+          <p>Tohle je <strong>neoficiální přehled</strong>, který se jednou týdně automaticky skládá z veřejné
+            <a id="source-link" href="https://www.tanecniskolaeso.cz/tanecni-kurzy" target="_blank" rel="noopener noreferrer">nabídky kurzů na tanecniskolaeso.cz</a>
+            a ze stránky páteční tančírny. Škola sama rozvrh sálů nezveřejňuje.</p>
+          <p><strong>„Volno“ znamená jen to, že na ten čas není vypsaný žádný veřejný kurz.</strong>
+            Individuální lekce, soukromé pronájmy, plesy, soustředění a další nevypsané akce tu nejsou –
+            jestli je sál opravdu volný, vám potvrdí jen škola.</p>
+          <p class="meta" id="checked"></p>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-foot">
+    <div class="wrap">
+      <p>Neoficiální stránka, není provozována Taneční školou Eso. Zdroj dat:
+        <a href="https://www.tanecniskolaeso.cz/" target="_blank" rel="noopener noreferrer">tanecniskolaeso.cz</a>.
+        Časy jsou v místním čase (Brno).</p>
+    </div>
+  </footer>
+
+  <dialog id="detail" class="detail" aria-labelledby="detail-title"></dialog>
+</body>
+</html>

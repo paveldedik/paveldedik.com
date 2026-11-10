@@ -1,0 +1,222 @@
+name: Eso rozvrh
+
+# eso-rozvrh.paveldedik.com: scrape -> test -> commit the data if it changed ->
+# deploy. Deliberately its own workflow and NOT a job in deploy.yml: besides
+# deploying it runs on a schedule, scrapes a third-party site and commits back
+# to the repo, so it needs its own triggers, permissions and failure handling.
+on:
+  # Weekly, Monday 04:17 UTC (off-peak, and off the full hour, when GitHub's
+  # scheduler is overloaded and drops runs). New courses are announced weeks
+  # ahead, so a delay of up to a week is fine.
+  schedule:
+    - cron: "17 4 * * 1"
+  # A code change to the site or the scraper ships immediately.
+  push:
+    branches: [master]
+    paths:
+      - "eso-rozvrh/**"
+      - "!eso-rozvrh/README.md"
+      - ".github/workflows/eso-rozvrh.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write # commit eso-rozvrh/site/data/schedule.json
+  actions: write # keepalive: re-enable this workflow (see the first step)
+
+# One run at a time: two runs must never race each other's data commit.
+concurrency:
+  group: eso-rozvrh
+  cancel-in-progress: false
+
+env:
+  DATA_FILE: eso-rozvrh/site/data/schedule.json
+
+jobs:
+  eso-rozvrh:
+    # The job commits to and deploys from master; a manual run started from
+    # another branch must do neither.
+    if: github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      # GitHub disables scheduled workflows of a PUBLIC repo after 60 days
+      # without repository activity, and this site is meant to run untouched
+      # for years. Re-enabling the workflow through the API resets that timer.
+      # (The data commit below is real activity too, at least every other
+      # week, so either one alone keeps the schedule running.) Best effort: a
+      # failure here must not stop the scrape.
+      - name: Keep the schedule alive
+        if: github.event_name == 'schedule'
+        continue-on-error: true
+        timeout-minutes: 2
+        run: gh api --silent --method PUT "repos/$GITHUB_REPOSITORY/actions/workflows/eso-rozvrh.yml/enable"
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      # The scraper has no dependencies today; if it ever gets some, they are
+      # installed from the lockfile without touching this file.
+      - name: Install scraper dependencies
+        working-directory: eso-rozvrh/scraper
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci
+          elif [ -f package.json ]; then
+            npm install --no-audit --no-fund
+          fi
+
+      # Tests run against the saved fixtures, not the live site, so a failure
+      # here is a code bug: stop before scraping or deploying anything.
+      # (A package.json "test" script wins over plain `node --test` discovery.)
+      - name: Test the scraper
+        working-directory: eso-rozvrh/scraper
+        run: |
+          if [ -f package.json ] && jq -e '.scripts.test' package.json > /dev/null; then
+            npm test
+          else
+            node --test
+          fi
+
+      # Site tests live outside the deployed files, in site-test/ or site/test/.
+      - name: Test the site
+        working-directory: eso-rozvrh
+        run: |
+          if [ -d site-test ]; then
+            cd site-test
+          elif [ -d site/test ]; then
+            cd site
+          else
+            echo "No site tests."
+            exit 0
+          fi
+          if [ -f package.json ] && jq -e '.scripts.test' package.json > /dev/null; then
+            npm test
+          else
+            node --test
+          fi
+
+      # The source site can be down or change its markup. That must not block
+      # a deploy of the code (push), and must not go unnoticed: the step is
+      # allowed to fail here and the last step fails the run instead.
+      #
+      # The timeout must stay above the scraper's own retry budget: about
+      # 3 minutes at worst for the listing (4 attempts of 30 s plus 43 s of
+      # pauses) and one shared 90 s deadline for the optional pages (the
+      # categories and the tančírna), so about 4.5 minutes. The limit here is
+      # deliberately generous.
+      - name: Scrape tanecniskolaeso.cz
+        id: scrape
+        continue-on-error: true
+        timeout-minutes: 25
+        working-directory: eso-rozvrh/scraper
+        run: |
+          node scrape.mjs
+          # Never publish a file the page cannot read.
+          jq -e '.schemaVersion == 1 and (.courses | type == "array") and (.rooms | length > 0)' \
+            "$GITHUB_WORKSPACE/$DATA_FILE" > /dev/null
+
+      # A failed scrape may leave a half-written file behind; go back to the
+      # last committed data so that is what a deploy below publishes.
+      - name: Restore the last committed data
+        if: steps.scrape.outcome == 'failure'
+        run: git checkout -- "$DATA_FILE"
+
+      # Committed when the scraper reports a meaningful change (changed=true),
+      # and otherwise only when the committed file was last checked
+      # REFRESH_AFTER_DAYS or more ago, i.e. every other week. An unchanged run
+      # in between just refreshes `checkedAt`, which is deployed below but not
+      # committed.
+      #
+      # Why the fortnightly refresh: the committed file is what every later
+      # run starts from, and what a push with a failed scrape (or a deploy by
+      # hand) publishes. Left to go stale it would (a) put a months-old
+      # `checkedAt` on the site, which the page reports as "data could not be
+      # updated" after 21 days, and (b) leave the `lastSeen` dates in the
+      # committed file months behind. 13 rather than 14, so that a run
+      # starting a few minutes earlier than the one two weeks before still
+      # counts.
+      #
+      # The push uses GITHUB_TOKEN, and GitHub starts no workflow for pushes
+      # made with it. So this commit neither re-triggers this workflow (it
+      # would loop: the path filter above matches the data file) nor
+      # deploy.yml; the deploy step below publishes it instead.
+      - name: Commit the new data
+        if: steps.scrape.outcome == 'success'
+        env:
+          CHANGED: ${{ steps.scrape.outputs.changed }}
+          REFRESH_AFTER_DAYS: "13"
+        run: |
+          if [ "$CHANGED" = "true" ]; then
+            message="eso-rozvrh: update the schedule data from tanecniskolaeso.cz"
+          elif git show "HEAD:$DATA_FILE" 2> /dev/null | jq -e --argjson days "$REFRESH_AFTER_DAYS" \
+            '(now - (.checkedAt | fromdateiso8601)) < ($days * 86400)' > /dev/null 2>&1; then
+            echo "No change, and the committed data was checked less than $REFRESH_AFTER_DAYS days ago. Nothing to commit."
+            exit 0
+          else
+            # Also taken when the committed file is missing or its checkedAt
+            # is unreadable: committing the fresh file is the safe side.
+            message="eso-rozvrh: refresh the check date of the schedule data"
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- "$DATA_FILE"
+          if git diff --cached --quiet; then
+            echo "The file is identical to the committed one. Nothing to commit."
+            exit 0
+          fi
+          git commit -m "$message"
+          # Someone may have pushed to master since the checkout: rebase onto
+          # it and retry. A conflict in the data file itself fails the run.
+          for attempt in 1 2 3 4 5; do
+            if git push origin HEAD:master; then
+              exit 0
+            fi
+            echo "Push rejected (attempt $attempt), rebasing onto master."
+            git pull --rebase origin master
+          done
+          echo "::error::Could not push the data commit after 5 attempts."
+          exit 1
+
+      # Only the site is uploaded. Tests and tooling that may live inside
+      # site/ are left out, and a deploy without the page or its data is
+      # refused rather than published.
+      - name: Assemble the site
+        if: steps.scrape.outcome == 'success' || github.event_name != 'schedule'
+        run: |
+          rsync -a --delete \
+            --exclude='.*' --exclude='node_modules/' \
+            --exclude='test/' --exclude='tests/' --exclude='*.test.*' \
+            --exclude='package.json' --exclude='package-lock.json' \
+            eso-rozvrh/site/ "$RUNNER_TEMP/eso-rozvrh-dist/"
+          test -s "$RUNNER_TEMP/eso-rozvrh-dist/index.html"
+          jq -e '.schemaVersion == 1' "$RUNNER_TEMP/eso-rozvrh-dist/data/schedule.json" > /dev/null
+
+      # Direct upload: Terraform (terraform/eso-rozvrh) owns the Pages project
+      # and the domain, this only pushes the files. --branch must match the
+      # project's production_branch, otherwise the upload lands as a preview.
+      #
+      # After a failed scrape a push or a manual run still deploys (the code
+      # change ships with the last committed data); a scheduled run has nothing
+      # new to publish and skips it.
+      - name: Deploy to Cloudflare Pages
+        if: steps.scrape.outcome == 'success' || github.event_name != 'schedule'
+        timeout-minutes: 5
+        run: npx wrangler@4 pages deploy "$RUNNER_TEMP/eso-rozvrh-dist" --project-name=eso-rozvrh --branch=master
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
+      # Last, so everything above still ran: a red run is what makes GitHub
+      # mail the owner. The site keeps serving the previous data meanwhile.
+      - name: Fail the run if the scrape failed
+        if: always() && steps.scrape.outcome == 'failure'
+        run: |
+          echo "::error::Scraping tanecniskolaeso.cz failed; the site keeps the last committed data. See eso-rozvrh/README.md, 'When the weekly run fails'."
+          exit 1
