@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "checkedAt": "2026-11-10T15:04:44Z",
-  "updatedAt": "2026-11-10T14:28:54Z",
+  "checkedAt": "2026-11-23T14:37:59Z",
+  "updatedAt": "2026-11-23T14:37:59Z",
   "source": "https://www.tanecniskolaeso.cz/tanecni-kurzy",
   "venue": {
     "name": "Taneční škola Eso",
@@ -120,7 +120,7 @@
         "2027-01-25"
       ],
       "firstSeen": "2026-11-10",
-      "lastSeen": "2026-11-10"
+      "lastSeen": "2026-11-23"
     },
     {
       "code": "26B472",
@@ -238,7 +238,7 @@
       "roomRaw": "Malý sál",
       "firstDate": "2026-12-01",
       "lastDate": "2027-01-26",
-      "lecturer": "D. Indrák",
+      "lecturer": "R. Vláčilová",
       "dates": [
         "2026-12-01",
         "2026-12-08",
@@ -250,7 +250,7 @@
         "2027-01-26"
       ],
       "firstSeen": "2026-11-10",
-      "lastSeen": "2026-11-10"
+      "lastSeen": "2026-11-23"
     },
     {
       "code": "26B477",
@@ -276,7 +276,7 @@
         "2027-01-28"
       ],
       "firstSeen": "2026-11-10",
-      "lastSeen": "2026-11-10"
+      "lastSeen": "2026-11-23"
     },
     {
       "code": "26B478",
@@ -286,11 +286,11 @@
       "weekday": 7,
       "start": "18:15",
       "end": "19:45",
-      "room": "maly",
-      "roomRaw": "Malý sál",
+      "room": "velky",
+      "roomRaw": "Velký sál",
       "firstDate": "2026-11-29",
       "lastDate": "2027-01-24",
-      "lecturer": "R. Vláčilová",
+      "lecturer": "D. Indrák",
       "dates": [
         "2026-11-29",
         "2026-12-06",
@@ -302,7 +302,7 @@
         "2027-01-24"
       ],
       "firstSeen": "2026-11-10",
-      "lastSeen": "2026-11-10"
+      "lastSeen": "2026-11-23"
     },
     {
       "code": "26C133",
@@ -368,7 +368,7 @@
       "roomRaw": "Velký sál",
       "firstDate": "2026-12-01",
       "lastDate": "2027-01-26",
-      "lecturer": "K. Daněk",
+      "lecturer": "J. Hanák",
       "dates": [
         "2026-12-01",
         "2026-12-08",
@@ -380,7 +380,7 @@
         "2027-01-26"
       ],
       "firstSeen": "2026-11-10",
-      "lastSeen": "2026-11-10"
+      "lastSeen": "2026-11-23"
     },
     {
       "code": "26D351",
@@ -432,7 +432,7 @@
         "2027-01-25"
       ],
       "firstSeen": "2026-11-10",
-      "lastSeen": "2026-11-10"
+      "lastSeen": "2026-11-23"
     },
     {
       "code": "26D353",
@@ -614,7 +614,7 @@
         "2027-02-03"
       ],
       "firstSeen": "2026-11-10",
-      "lastSeen": "2026-11-10"
+      "lastSeen": "2026-11-23"
     },
     {
       "code": "26D360",
@@ -640,7 +640,7 @@
         "2027-01-28"
       ],
       "firstSeen": "2026-11-10",
-      "lastSeen": "2026-11-10"
+      "lastSeen": "2026-11-23"
     },
     {
       "code": "26D361",
@@ -650,11 +650,11 @@
       "weekday": 7,
       "start": "18:15",
       "end": "19:45",
-      "room": "velky",
-      "roomRaw": "Velký sál",
+      "room": "maly",
+      "roomRaw": "Malý sál",
       "firstDate": "2026-11-29",
       "lastDate": "2027-01-24",
-      "lecturer": "F. Radil",
+      "lecturer": "V. Šůstková",
       "dates": [
         "2026-11-29",
         "2026-12-06",
@@ -666,7 +666,7 @@
         "2027-01-24"
       ],
       "firstSeen": "2026-11-10",
-      "lastSeen": "2026-11-10"
+      "lastSeen": "2026-11-23"
     },
     {
       "code": "26HB29",
@@ -718,7 +718,7 @@
         "2027-01-24"
       ],
       "firstSeen": "2026-11-10",
-      "lastSeen": "2026-11-10"
+      "lastSeen": "2026-11-23"
     },
     {
       "code": "26M53",
@@ -770,7 +770,7 @@
         "2027-02-03"
       ],
       "firstSeen": "2026-11-10",
-      "lastSeen": "2026-11-10"
+      "lastSeen": "2026-11-23"
     },
     {
       "code": "26P69",
@@ -810,7 +810,7 @@
       "roomRaw": "Velký sál",
       "firstDate": "2026-12-01",
       "lastDate": "2027-01-26",
-      "lecturer": "K. Daněk",
+      "lecturer": "R. Vláčilová",
       "dates": [
         "2026-12-01",
         "2026-12-08",
@@ -822,7 +822,7 @@
         "2027-01-26"
       ],
       "firstSeen": "2026-11-10",
-      "lastSeen": "2026-11-10"
+      "lastSeen": "2026-11-23"
     }
   ],
   "recurring": [
@@ -862,27 +862,27 @@
     {
       "source": "https://www.tanecniskolaeso.cz/tanecni-kurzy/bambusove-tanecni",
       "text": "Ve dnech 28. 10. a 17. 11. 2026 (státní svátky) lekce neprobíhají. O Vánocích (23. 12. 2026 až 2. 1. 2027 včetně) se netančí!",
-      "lastSeen": "2026-11-10"
+      "lastSeen": "2026-11-23"
     },
     {
       "source": "https://www.tanecniskolaeso.cz/akce/tancirna-eso-original",
       "text": "pátek 20.00 - 22.00 ... pravidelně celý rok kromě Vánoc - tedy i o prázdninách (letních i jarních), i o státních svátcích, atd.",
-      "lastSeen": "2026-11-10"
+      "lastSeen": "2026-11-23"
     },
     {
       "source": "https://www.tanecniskolaeso.cz/akce/tancirna-eso-original",
       "text": "přes Vánoce neprobíhají žádné tančírny (23. 12. 2026 až 2. 1. 2027 včetně)",
-      "lastSeen": "2026-11-10"
+      "lastSeen": "2026-11-23"
     },
     {
       "source": "https://www.tanecniskolaeso.cz/akce/tancirna-eso-original",
       "text": "18. 12. 2026 a 8. 1. 2027 tančírna normálně běží!",
-      "lastSeen": "2026-11-10"
+      "lastSeen": "2026-11-23"
     },
     {
       "source": "https://www.tanecniskolaeso.cz/akce/tancirna-eso-original",
       "text": "POZOR, 27. 11. tančírna není, místo toho vás zveme na ples:",
-      "lastSeen": "2026-11-10"
+      "lastSeen": "2026-11-23"
     }
   ]
 }
